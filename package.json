@@ -2,13 +2,20 @@
   "name": "newdp",
   "version": "0.1.0",
   "private": true,
+  "author": "ZhenHua Zhang",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.4",
+    "echarts": "4.9.0",
+    "lib-flexible": "^0.3.2",
+    "nprogress": "^0.2.0",
+    "px2rem-loader": "^0.1.9",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"

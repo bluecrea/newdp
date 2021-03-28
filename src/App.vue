@@ -1,30 +1,40 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="wrap">
+    <loading v-if="dtLoading"/>
+    <header-bar :title="title" />
+    <main>
+      <router-view/>
+    </main>
   </div>
-  <router-view/>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Loading from '@/components/loading'
+import HeaderBar from '@/components/Header'
+import { ref, onMounted } from 'vue'
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
+  setup() {
+    const dtLoading = ref(true)
+    const title = ref('')
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    const getData = () => {
+      dtLoading.value = false
+      title.value = '深圳市农贸市场智能计量监管系统'
     }
-  }
+    onMounted(() => getData())
+    return {
+      dtLoading,
+      title,
+    }
+  },
+  components: {
+    Loading,
+    HeaderBar
+  },
 }
+</script>
+<style lang="less">
+@import "assets/style/index";
 </style>
