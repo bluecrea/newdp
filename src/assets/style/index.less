@@ -19,22 +19,22 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
   list-style: none;
 }
 #app {
-  width: 100vw;
+  padding:0;
+  margin: 0;
   height: 100vh;
   min-height: 1080px;
   background:#051123 url("~@/assets/images/index/bg.jpg") no-repeat;
   background-size: 100% auto;
   header {
     height: 84px;
-    width: 1920px;
-    margin: 0 auto;
+    width: 100%;
     display: flex;
     flex: auto;
     color: white;
     ul.menu {
       display: flex;
       flex-direction: row;
-      width: 690px;
+      width: 35.9%;
       align-items: flex-end;
       justify-content: flex-end;
       li {
@@ -53,7 +53,7 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
       }
     }
     .title {
-      width: 540px;
+      width: 28.1%;
       height: 80px;
       display: block;
       position: relative;
@@ -106,7 +106,7 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
       }
     }
     .now-date {
-      width: 658px;
+      width: calc(34.2% - 32px);
       margin-right: 32px;
       font-size: 17px;
       display: flex;
@@ -136,35 +136,102 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
     }
   }
   main {
-    width: 1920px;
     height: calc(100vh - 84px);
     min-height: calc(1080px - 84px);
     margin: 0 auto;
     box-sizing: border-box;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    .main-left {
-      width: 1306px;
+    .flex-con {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      .map {
-        width: 100%;
-        height: 610px;
+      padding: 15px;
+      .main-left {
+        width: 1306px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .map {
+          width: 100%;
+          height: 610px;
+        }
+        .table-box {
+          .title {
+
+          }
+          .table {
+
+          }
+        }
       }
-      .table-box {
-        .title {
-
+      .main-right {
+        width: 555px;
+        height: 957px;
+        background: rgba(6,17,33, .57);
+        border: 2px solid;/*no*/
+        border-image: linear-gradient(0deg, rgba(31, 77, 102, 0.56), rgba(92, 192, 243, 0.56)) 2 2;
+        .right-box {
+          padding: 20px;
+          color: white;
+          .title {
+            height: 45px;
+            line-height: 45px;
+            position: relative;
+            display: flex;
+            font-size: 23px;
+            align-content: center;
+            &:before {
+              background:url("~@/assets/images/index/title_icon.png") no-repeat 0 center;
+              background-size: 18px 27px;
+              width: 30px;
+              height: 45px;
+              content: '';
+            }
+          }
+          .box-con {
+            padding:10px 0;
+            .list-3 {
+              display: flex;
+              flex-direction: row;
+              align-content: center;
+              li {
+                width: 33.3%;
+                display: flex;
+                flex-direction: column;
+                em {
+                  width: 90px;
+                  height: 85px;
+                  display: block;
+                  margin: 0 auto;
+                  padding: 5px;
+                  img {
+                    max-width: 100%;
+                    max-height: 100%;
+                  }
+                }
+                p,span {
+                  text-align: center;
+                }
+                p {
+                  font-size: 18px;
+                  strong {
+                    font-size: 60px;
+                    background: linear-gradient(to bottom,#5CEEE9,#07A67B);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                  }
+                }
+                span {
+                  font-size: 20px;
+                }
+                &:not(:last-child){
+                  background: url("~@/assets/images/index/li_line.png") no-repeat right center;
+                }
+              }
+            }
+          }
         }
-        .table {
 
-        }
       }
     }
-    .main-right {
-      width: 555px;
-    }
+
   }
 }
 .loading {
