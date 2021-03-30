@@ -226,6 +226,55 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
                 }
               }
             }
+            h4 {
+              font-size: 20px;
+              font-weight: normal;
+              text-shadow: 0 0 10px #00b9ff;/*no*/
+              height: 30px;
+              line-height: 30px;
+              padding-bottom: 10px;
+            }
+            ul.num-roll {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: flex-start;
+              height: 70px;
+              li {
+                width: 53px;
+                height: 70px;
+                margin-right: 3px;
+                background: url("~@/assets/images/index/num_box.png") no-repeat center;
+                background-size: 100% auto;
+                font-size: 50px;
+                text-align: center;
+                line-height: 70px;
+                color: #5CC9CA;
+                position: relative;
+                span {
+                  position: absolute;
+                  width: 53px;
+                  height: 70px;
+                  bottom: 0;
+                  writing-mode: vertical-rl;
+                  text-orientation: upright;
+                  overflow: hidden;
+                  display: block;
+                  i {
+                    font-style: normal;
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    transition: transform 1s ease-in-out;
+                    letter-spacing: 10px;
+                    &.no-date {
+                      opacity: .3;
+                    }
+                  }
+                }
+              }
+            }
           }
         }
 
