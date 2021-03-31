@@ -153,11 +153,79 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
           height: 610px;
         }
         .table-box {
-          .title {
-
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: flex-start;
+          color: white;
+          width: 1280px;
+          .img-left {
+            width: 555px;
+            .img-con {
+              display: flex;
+              height: 290px;
+              margin-top: 5px;
+              background-color: rgba(1,17,29,.9);
+              justify-content: space-between;
+              align-items: center;
+              .img {
+                width: 193px;
+                height: 252px;
+                img {
+                  width: 193px;
+                  height: 252px;
+                  border-radius: 6px;
+                }
+              }
+              ul.list {
+                width: 100%;
+                margin-left: 30px;
+                li {
+                  position: relative;
+                  padding-left: 45px;
+                  color: #82D6FB;
+                  font-size: 18px;
+                  line-height: 54px;
+                  span {
+                    color: #F7CD46;
+                    font-size: 30px;
+                    font-family: "CourierPrime", sans-serif;
+                    letter-spacing: -4px;
+                  }
+                  &:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    width: 41px;
+                    height: 50px;
+                    background: url("~@/assets/images/index/icon_sp.png") no-repeat;
+                  }
+                  &:nth-of-type(1):before {
+                    background-position: 0 6px;
+                  }
+                  &:nth-of-type(2):before {
+                    background-position: 0 -40px;
+                  }
+                  &:nth-of-type(3):before {
+                    background-position: 0 -92px;
+                  }
+                  &:nth-of-type(4):before {
+                    background-position: 0 -143px;
+                  }
+                }
+              }
+            }
           }
-          .table {
-
+          .table-right {
+            width: 725px;
+            .table-con {
+              display: flex;
+              width: 100%;
+              height: 290px;
+              margin-top: 5px;
+              background-color: rgba(1,17,29,.9);
+            }
           }
         }
       }
@@ -170,21 +238,6 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
         .right-box {
           padding: 20px;
           color: white;
-          .title {
-            height: 45px;
-            line-height: 45px;
-            position: relative;
-            display: flex;
-            font-size: 23px;
-            align-content: center;
-            &:before {
-              background:url("~@/assets/images/index/title_icon.png") no-repeat 0 center;
-              background-size: 18px 27px;
-              width: 30px;
-              height: 45px;
-              content: '';
-            }
-          }
           .box-con {
             padding:10px 0;
             .list-3 {
@@ -240,6 +293,7 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
               align-items: center;
               justify-content: flex-start;
               height: 70px;
+              margin-bottom: 10px;
               li {
                 width: 53px;
                 height: 70px;
@@ -268,6 +322,7 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
                     transform: translate(-50%, 0);
                     transition: transform 1s ease-in-out;
                     letter-spacing: 10px;
+                    user-select:none;
                     &.no-date {
                       opacity: .3;
                     }
@@ -281,6 +336,21 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
       }
     }
 
+  }
+}
+.title {
+  height: 45px;
+  line-height: 45px;
+  position: relative;
+  display: flex;
+  font-size: 23px;
+  align-content: center;
+  &:before {
+    background:url("~@/assets/images/index/title_icon.png") no-repeat 0 center;
+    background-size: 18px 27px;
+    width: 30px;
+    height: 45px;
+    content: '';
   }
 }
 .loading {

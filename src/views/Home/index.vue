@@ -2,44 +2,41 @@
   <div class="flex-con">
     <div class="main-left">
       <div class="map" id="map"/>
+      <div class="table-box">
+        <div class="img-left">
+          <div class="title">横岗第一市场</div>
+          <div class="img-con">
+            <div class="img">
+              <swiper-con/>
+            <!-- <img src="https://goss.cfp.cn/creative/vcg/800/new/VCG41N728851723.jpg" alt="">-->
+            </div>
+            <ul class="list">
+              <li>挡位数 <span>99</span> 个</li>
+              <li>器具数 <span>52</span> 台</li>
+              <li>交易数 <span>952154865 </span>笔</li>
+              <li>异常器具数 <span>0</span> 台</li>
+            </ul>
+          </div>
+        </div>
+        <div class="table-right">
+          <div class="title">实时交易</div>
+          <div class="table-con">
 
+          </div>
+        </div>
+      </div>
     </div>
     <div class="main-right">
       <div class="right-box">
         <div class="title">数据监测展示</div>
         <div class="box-con">
-          <ul class="list-3" style="height: 220px;">
-            <li>
-              <em>
-                <img src="../../assets/images/index/list_1.png" alt="">
-              </em>
-              <p><strong>98</strong>个</p>
-              <span>市场总数</span>
-            </li>
-            <li>
-              <em>
-                <img src="../../assets/images/index/list_2.png" alt="">
-              </em>
-              <p><strong>98</strong>个</p>
-              <span>接入市场</span>
-            </li>
-            <li>
-              <em>
-                <img src="../../assets/images/index/list_3.png" alt="">
-              </em>
-              <p><strong>98</strong>个</p>
-              <span>接入秤数</span>
-            </li>
-          </ul>
+          <data-monitor :accessArr="accessArr"/>
           <h4>今日交易额</h4>
-          <ul class="num-roll">
-            <li class="no-date" v-for="index in 9" :key="index">
-              <span>
-                <i :ref="el => { numberItem[index-1] = el }">0123456789</i>
-              </span>
-            </li>
-          </ul>
+          <num-roll :orderArr="numberArr"/>
+          <h4>今日交易数</h4>
+          <num-roll :order-arr="toDayArr"/>
         </div>
+        <div class="title">肉菜价格指数</div>
       </div>
     </div>
   </div>
@@ -48,14 +45,24 @@
 <script>
 import echarts from 'echarts'
 import shenzhen from '@/assets/map/shenzhen.json'
-import { nextTick, onMounted, ref } from 'vue'
-import {mapOption } from "@/views/Home/components/map";
+import { onMounted, ref } from 'vue'
+import { mapOption } from "@/views/Home/components/map"
+import dataMonitor from './components/DataMonitor'
+import NumRoll from '@/views/Home/components/NumRoll'
+import SwiperCon from '@/views/Home/components/SwiperCon'
 
 export default {
   name: 'Home',
   setup() {
     const numberArr = ref([])
-    const numberItem = ref([])
+    const toDayArr = ref([])
+    const accessArr = ref([
+      { name: 'totalAccess', data: 0, title: '市场总数', img: require('../../assets/images/index/list_1.png') },
+      { name: 'marketAccess', data: 0, title: '接入市场', img: require('../../assets/images/index/list_2.png')},
+      { name: 'scalesAccess', data: 0, title: '接入秤数', img: require('../../assets/images/index/list_3.png')}
+    ])
+
+
     onMounted(() => {
       initMap()
     })
@@ -68,36 +75,30 @@ export default {
         chart.resize();
       })
       let num = 2568782
-      setNumberTransform(num)
+      numberArr.value = setNumberTransform(num)
       setInterval(() => {
         num ++
-        setNumberTransform(num)
+        numberArr.value = setNumberTransform(num)
       }, 5000)
-
+      accessArr.value[0].data = 96
+      toDayArr.value = setNumberTransform(32341)
     }
     const setNumberTransform = (num) => {
       num = `${num}`.split('')
-      const numberItems = numberItem.value
       if (num.length < 9) {
         let arrLength = num.length
         for (let i = 0; i < (9 - arrLength); i++) {
           num.unshift('0')
         }
       }
-      nextTick(() => {
-        numberItems.forEach((item,index) => {
-          let ty = num[index]
-          if (ty === '0') {
-            item.style = 'opacity: .3;'
-          } else {
-            item.style = `transform:translate(-50%, -${ty * 10}%);`
-          }
-
-        })
-      })
+      return num
     }
-
-    return { numberItem,numberArr }
+    return { numberArr,accessArr,toDayArr }
+  },
+  components: {
+    dataMonitor,
+    NumRoll,
+    SwiperCon
   }
 }
 </script>
