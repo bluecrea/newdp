@@ -7,7 +7,7 @@
     </li>
   </ul>
 </template>
-<script>
+<script lang="ts">
 export default {
   props: {
     orderArr: {

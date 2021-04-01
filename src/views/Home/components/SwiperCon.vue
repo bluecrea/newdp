@@ -29,7 +29,7 @@ export default defineComponent({
         centeredSlides: true,
         //slidesPerView: 'auto',
         autoplay: {
-          delay: 3500,
+          delay: 4500,
           stopOnLastSlide: false,
           disableOnInteraction: false,
         },

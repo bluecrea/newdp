@@ -8,7 +8,6 @@
           <div class="img-con">
             <div class="img">
               <swiper-con/>
-            <!-- <img src="https://goss.cfp.cn/creative/vcg/800/new/VCG41N728851723.jpg" alt="">-->
             </div>
             <ul class="list">
               <li>挡位数 <span>99</span> 个</li>
@@ -20,9 +19,7 @@
         </div>
         <div class="table-right">
           <div class="title">实时交易</div>
-          <div class="table-con">
-
-          </div>
+          <table-marquee/>
         </div>
       </div>
     </div>
@@ -37,6 +34,9 @@
           <num-roll :order-arr="toDayArr"/>
         </div>
         <div class="title">肉菜价格指数</div>
+        <div class="line-box">
+          <loading/>
+        </div>
       </div>
     </div>
   </div>
@@ -44,12 +44,14 @@
 
 <script>
 import echarts from 'echarts'
-import shenzhen from '@/assets/map/shenzhen.json'
+import shenzhen from '@/assets/map/sz.json'
 import { onMounted, ref } from 'vue'
 import { mapOption } from "@/views/Home/components/map"
 import dataMonitor from './components/DataMonitor'
-import NumRoll from '@/views/Home/components/NumRoll'
-import SwiperCon from '@/views/Home/components/SwiperCon'
+import tableMarquee from './components/TableMarquee'
+import NumRoll from './components/NumRoll'
+import SwiperCon from './components/SwiperCon'
+import Loading from '@/components/loading'
 
 export default {
   name: 'Home',
@@ -62,12 +64,16 @@ export default {
       { name: 'scalesAccess', data: 0, title: '接入秤数', img: require('../../assets/images/index/list_3.png')}
     ])
 
-
     onMounted(() => {
       initMap()
     })
     const initMap = () => {
-      mapOption.series[0].data = [{name:'食堂', value: [114.23102, 22.541309, 2], symbolSize: 10}]
+      mapOption.series[1].data = [
+        {name: '在线', value: [114.136252,22.656084, 2], symbolSize: 5},
+        {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
+        ]
+      mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 4}]
+
       let chart = echarts.init(document.getElementById('map'))
       echarts.registerMap('shenzhen',shenzhen)
       chart.setOption(mapOption)
@@ -93,12 +99,14 @@ export default {
       }
       return num
     }
-    return { numberArr,accessArr,toDayArr }
+    return { numberArr, accessArr, toDayArr }
   },
   components: {
     dataMonitor,
     NumRoll,
-    SwiperCon
+    SwiperCon,
+    tableMarquee,
+    Loading
   }
 }
 </script>

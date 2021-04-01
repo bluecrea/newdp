@@ -1,29 +1,20 @@
 export const mapOption = {
   geo: {
     map: 'shenzhen',
-    type: 'map',
     left: '5%',
-    right: '20%',
+    right: '18%',
     top: 0,
-    bottom: 0,
-    layoutCenter: ['50%', '50%'],
+    bottom: '10px',
     itemStyle:{
-      areaColor: '#277b97',
-      borderColor: '#4aeff9',
-      borderWidth: 1,
+      normal: {
+        areaColor: '#277b97',
+        shadowColor: '#075289',
+        shadowBlur: 5,
+        shadowOffsetX: 0,
+        shadowOffsetY: 10,
+      },
+
     },
-    /*emphasis: {
-      itemStyle: {
-        areaColor: '#123555',
-        shadowColor: '#000',
-        shadowBlur: 10
-      }
-    },*/
-    label:{
-      show: true,
-      color: '#8be8f9',
-      fontSize: 14,
-    }
   },
   visualMap: {
     type: 'piecewise',
@@ -68,9 +59,38 @@ export const mapOption = {
     visibility: 'off'
   },
   series: [{
-    name: '食堂/餐饮',
+    type: 'map',
+    map: 'shenzhen',
+    left: '5%',
+    right: '18%',
+    top: 0,
+    bottom: '10px',
+    itemStyle: {
+      normal: {
+        areaColor: '#277b97',
+        borderColor: '#1cccff',
+        borderWidth: 1.5
+      }
+    },
+    label:{
+      show: true,
+      color: '#8be8f9',
+      fontSize: 14,
+    }
+  },{
+    name: '在线',
+    type: 'effectScatter',
+    coordinateSystem: 'geo',
+    rippleEffect: { //涟漪特效
+      period: 5, //动画时间，值越小速度越快
+      brushType: 'stroke', //波纹绘制方式 stroke, fill
+      scale: 3 //波纹圆环最大限制，值越大波纹越大
+    },
+    data: [],
+  }, {
+    name: '不在线',
     type: 'scatter',
     coordinateSystem: 'geo',
-    data: [],
+    data: []
   }]
 }

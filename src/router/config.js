@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 import '@/components/NProgress/nprogress.less'
 
 router.beforeEach((to,form,next) => {
-  document.title = `${to.meta.title} - 计量监管大屏`
+  document.title = `${to.meta.title} - 计量监管系统`
   NProgress.start()
   next()
 })

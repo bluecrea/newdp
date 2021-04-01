@@ -222,9 +222,52 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
             .table-con {
               display: flex;
               width: 100%;
-              height: 290px;
+              height: 270px;
               margin-top: 5px;
               background-color: rgba(1,17,29,.9);
+              padding: 10px 0;
+              .marquee {
+                width: 100%;
+                dl {
+                  display: flex;
+                  color: #ACB7BC;
+                  font-size: 14px;
+                  background-color: #072C39;
+                  justify-content: space-between;
+                  dt {
+                    flex: 1;
+                    padding: 8px;
+                    text-align: center;
+                  }
+                }
+                .marquee-wrap {
+                  width: 100%;
+                  height: calc(270px - 35px);
+                  overflow: hidden;
+                  .marquee-list {
+                    li {
+                      display: flex;
+                      color: #76C6CF;
+                      width: 100%;
+                      font-size: 14px;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      white-space: nowrap;
+                      height: 35px;
+                      border-bottom: 1px solid rgba(78,158,192, .1);
+                      span {
+                        flex: 1;
+                        padding: 8px;
+                        text-align: center;
+                      }
+                      /*&:nth-of-type(even) {
+                        background-color: rgba(78,158,192, .1);
+                      }*/
+                    }
+                  }
+                }
+
+              }
             }
           }
         }
@@ -331,6 +374,11 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
               }
             }
           }
+          .line-box {
+            width: 100%;
+            height: 350px;
+            position: relative;
+          }
         }
 
       }
@@ -354,14 +402,12 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
   }
 }
 .loading {
-  position: fixed;
+  position: absolute;
   top:0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,.7);
-  width: 100%;
-  height: 100vh;
+  //background-color: rgba(0,0,0,.7);
   display: flex;
   flex-direction: column;
   justify-content: center;
