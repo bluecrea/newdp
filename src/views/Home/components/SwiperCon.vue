@@ -21,8 +21,8 @@ export default defineComponent({
   name: 'SwiperCon',
   setup() {
     onMounted(() => {
-      new Swiper('.swiper', {
-        loop:!0,
+      new Swiper('.swiper-container', {
+        loop: true, // false: this.activeIndex
         spaceBetween: 25,
         effect: "cube",
         grabCursor: true,
@@ -39,12 +39,12 @@ export default defineComponent({
           depth: 100,
           modifier: 1,
           slideShadows: true,
-        }
-        /*on: {
-          navigationShow: () => {
-            console.log("按钮显示了");
-          }
-        },*/
+        },
+        on: {
+          slideChange: (e) => {
+            console.log(e.realIndex)
+          },
+        },
       })
     })
   }
