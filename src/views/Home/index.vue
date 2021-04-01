@@ -7,7 +7,7 @@
           <div class="title">横岗第一市场</div>
           <div class="img-con">
             <div class="img">
-              <swiper-con/>
+              <swiper-con @realIndex="realIndex"/>
             </div>
             <ul class="list">
               <li>挡位数 <span>99</span> 个</li>
@@ -63,10 +63,6 @@ export default {
       { name: 'marketAccess', data: 0, title: '接入市场', img: require('../../assets/images/index/list_2.png')},
       { name: 'scalesAccess', data: 0, title: '接入秤数', img: require('../../assets/images/index/list_3.png')}
     ])
-
-    onMounted(() => {
-      initMap()
-    })
     const initMap = () => {
       mapOption.series[1].data = [
         {name: '在线', value: [114.136252,22.656084, 2], symbolSize: 5},
@@ -99,7 +95,13 @@ export default {
       }
       return num
     }
-    return { numberArr, accessArr, toDayArr }
+    const realIndex = (params) => {
+      console.log(params)
+    }
+    onMounted(() => {
+      initMap()
+    })
+    return { numberArr, accessArr, toDayArr,realIndex }
   },
   components: {
     dataMonitor,

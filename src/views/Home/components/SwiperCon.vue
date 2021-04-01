@@ -19,7 +19,8 @@ import '@/assets/style/swiper.less'
 
 export default defineComponent({
   name: 'SwiperCon',
-  setup() {
+  emits: ['realIndex'],
+  setup(props, ctx) {
     onMounted(() => {
       new Swiper('.swiper-container', {
         loop: true, // false: this.activeIndex
@@ -42,7 +43,7 @@ export default defineComponent({
         },
         on: {
           slideChange: (e) => {
-            console.log(e.realIndex)
+            ctx.emit('realIndex', e.realIndex)
           },
         },
       })
