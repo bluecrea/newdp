@@ -1,7 +1,9 @@
 <template>
   <header>
-    <ul class="menu" v-if="route.name === 'Home'">
-      <li v-for="item in menuArr" :key="item">{{ item }}</li>
+    <ul class="menu">
+      <template v-if="route.name === 'Home'">
+        <li v-for="item in menuArr" :key="item">{{ item }}</li>
+      </template>
     </ul>
     <div class="title">
       <h1>{{title}}</h1>

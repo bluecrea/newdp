@@ -4,13 +4,14 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/views/Home/index'),
+    component: () => import('@/views/Home'),
     meta: { title: '首页'}
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/Login'),
+    meta: { title: '登录' }
   }
 ]
 

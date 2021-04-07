@@ -23,8 +23,14 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
   margin: 0;
   height: 100vh;
   min-height: 1080px;
-  background:#051123 url("~@/assets/images/index/bg.jpg") no-repeat;
-  background-size: 100% auto;
+  .wrap {
+    background:#051123 url("~@/assets/images/index/bg.jpg") no-repeat;
+    background-size: 100% auto;
+  }
+  .login {
+    background: #050b16 url("~@/assets/images/login/bg.jpg") no-repeat;
+    background-size: 100% auto;
+  }
   header {
     height: 84px;
     width: 100%;
@@ -383,7 +389,27 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
 
       }
     }
-
+    .login-box {
+      display: flex;
+      margin: 75px auto 0 auto;
+      width: 671px;
+      height: 524px;
+      background: url("~@/assets/images/login/login_box.png") no-repeat;
+      background-size: 100% auto;
+      box-sizing: border-box;
+      padding: 20px 60px;
+      flex-direction: column;
+      color: #13d5e2;
+      .login-tit {
+        width: 100%;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 5px;
+        height: 60px;
+        line-height: 60px;
+      }
+    }
   }
 }
 .title {

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div :class="[route.path === '/login' ? 'login' : 'wrap']">
     <loading v-if="dtLoading"/>
     <header-bar :title="title" />
     <main>
@@ -12,12 +12,14 @@
 import Loading from '@/components/loading'
 import HeaderBar from '@/components/Header'
 import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'App',
   setup() {
     const dtLoading = ref(true)
     const title = ref('')
+    const route = useRoute()
 
     const getData = () => {
       dtLoading.value = false
@@ -27,6 +29,7 @@ export default {
     return {
       dtLoading,
       title,
+      route
     }
   },
   components: {

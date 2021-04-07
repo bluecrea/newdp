@@ -4,16 +4,16 @@
       <div class="map" id="map"/>
       <div class="table-box">
         <div class="img-left">
-          <div class="title">横岗第一市场</div>
+          <div class="title">{{ realObj.marketName }}</div>
           <div class="img-con">
             <div class="img">
               <swiper-con @realIndex="realIndex"/>
             </div>
-            <ul class="list">
-              <li>挡位数 <span>99</span> 个</li>
-              <li>器具数 <span>52</span> 台</li>
-              <li>交易数 <span>952154865 </span>笔</li>
-              <li>异常器具数 <span>0</span> 台</li>
+            <ul class="list" v-if="realIndex">
+              <li>挡位数 <span>{{ realObj.stallNum }}</span> 个</li>
+              <li>器具数 <span>{{ realObj.deviceNum }}</span> 台</li>
+              <li>交易数 <span>{{ realObj.tradeQty }}</span> 笔</li>
+              <li>异常器具数 <span>{{ realObj.abnormalDeviceNum }}</span> 台</li>
             </ul>
           </div>
         </div>
@@ -35,7 +35,7 @@
         </div>
         <div class="title">肉菜价格指数</div>
         <div class="line-box">
-          <loading/>
+          <area-pieces/>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@ import dataMonitor from './components/DataMonitor'
 import tableMarquee from './components/TableMarquee'
 import NumRoll from './components/NumRoll'
 import SwiperCon from './components/SwiperCon'
-import Loading from '@/components/loading'
+import AreaPieces from './components/AreaPieces'
 
 export default {
   name: 'Home',
@@ -68,7 +68,7 @@ export default {
         {name: '在线', value: [114.136252,22.656084, 2], symbolSize: 5},
         {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
         ]
-      mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 4}]
+      mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
 
       let chart = echarts.init(document.getElementById('map'))
       echarts.registerMap('shenzhen',shenzhen)
@@ -95,20 +95,25 @@ export default {
       }
       return num
     }
+    const realObj = ref({})
     const realIndex = (params) => {
-      console.log(params)
+      let realArr = [
+        {marketName: '横岗第一市场', stallNum: 20, deviceNum: 15, tradeQty: 1200, abnormalDeviceNum: 1},
+        {marketName: '横岗第二市场', stallNum: 25, deviceNum: 25, tradeQty: 1300, abnormalDeviceNum: 2}
+      ]
+      realObj.value = realArr[params]
     }
     onMounted(() => {
       initMap()
     })
-    return { numberArr, accessArr, toDayArr,realIndex }
+    return { numberArr, accessArr, toDayArr,realIndex,realObj }
   },
   components: {
     dataMonitor,
     NumRoll,
     SwiperCon,
     tableMarquee,
-    Loading
+    AreaPieces
   }
 }
 </script>
