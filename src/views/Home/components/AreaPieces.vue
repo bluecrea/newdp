@@ -84,6 +84,9 @@ export default {
     nextTick(() => {
       let chart = echarts.init(pieces.value)
       chart.setOption(options)
+      window.addEventListener('resize', () => {
+        chart.resize();
+      })
     })
     return {pieces}
   }
