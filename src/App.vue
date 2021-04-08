@@ -1,6 +1,5 @@
 <template>
   <div :class="[route.path === '/login' ? 'login' : 'wrap']">
-    <loading v-if="dtLoading"/>
     <header-bar :title="title" />
     <main>
       <router-view/>
@@ -9,7 +8,6 @@
 </template>
 
 <script>
-import Loading from '@/components/loading'
 import HeaderBar from '@/components/Header'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -33,7 +31,6 @@ export default {
     }
   },
   components: {
-    Loading,
     HeaderBar
   },
 }

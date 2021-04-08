@@ -43,15 +43,15 @@
 </template>
 
 <script>
-import echarts from 'echarts'
-import shenzhen from '@/assets/map/sz.json'
 import { onMounted, ref } from 'vue'
 import { mapOption } from "@/views/Home/components/map"
+import { getOnMap } from '@/utils/api'
 import dataMonitor from './components/DataMonitor'
 import tableMarquee from './components/TableMarquee'
 import NumRoll from './components/NumRoll'
 import SwiperCon from './components/SwiperCon'
 import AreaPieces from './components/AreaPieces'
+import echarts from 'echarts'
 
 export default {
   name: 'Home',
@@ -69,13 +69,18 @@ export default {
         {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
         ]
       mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
-
-      let chart = echarts.init(document.getElementById('map'))
-      echarts.registerMap('shenzhen',shenzhen)
-      chart.setOption(mapOption)
-      window.addEventListener('resize', () => {
-        chart.resize();
+      getOnMap('shenzhen').then(res => {
+        let chart = echarts.init(document.getElementById('map'))
+        echarts.registerMap('shenzhen',res.data)
+        /*chart.on('click',(params) => {
+          router.push({path: '/measure', query: {name: params.name}})
+        })*/
+        chart.setOption(mapOption)
+        window.addEventListener('resize', () => {
+          chart.resize();
+        })
       })
+
       let num = 2568782
       numberArr.value = setNumberTransform(num)
       setInterval(() => {
@@ -113,7 +118,7 @@ export default {
     NumRoll,
     SwiperCon,
     tableMarquee,
-    AreaPieces
+    AreaPieces,
   }
 }
 </script>

@@ -1,7 +1,14 @@
 import axios from 'axios'
+import { basicUrl } from '@/utils/config'
 
-const request = axios.create({
-
+export const request = axios.create({
+  baseURL: basicUrl,
+  timeout: 6000,
+  method: 'POST'
 })
 
-export default request
+export const getMap = axios.create({
+  baseURL: 'https://map.xiachuyi.com/map/',
+  timeout: 6000,
+  method: 'GET'
+})

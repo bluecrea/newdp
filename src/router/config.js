@@ -7,7 +7,6 @@ import '@/components/NProgress/nprogress.less'
 router.beforeEach((to,form,next) => {
   document.title = `${to.meta.title} - 计量监管系统`
   NProgress.start()
-  console.log(Object.keys(store.getters['userInfo/userInfo']).length)
   if (to.path !== '/login' && Object.keys(store.getters['userInfo/userInfo']).length === 0) {
     next({ name: 'login' })
   } else {

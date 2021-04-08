@@ -1,5 +1,5 @@
 const state = {
-  userInfo: {}
+  userInfo: sessionStorage.getItem('userInfo') || {}
 }
 
 const getters = {
@@ -10,15 +10,15 @@ const mutations = {
   SET_USERINFO(state, userInfo) {
     state.userInfo = userInfo
     if (state.userInfo.rememberMe) {
-      sessionStorage.setItem('userInfo', state.userInfo)
+      sessionStorage.setItem('userInfo', JSON.stringify(state.userInfo))
     } else {
       sessionStorage.removeItem('userInfo')
     }
   },
 
   REMOVE_USERINFO(state) {
-    state.userInfo = {}
     sessionStorage.removeItem('userInfo')
+    state.userInfo = {}
   }
 }
 

@@ -47,9 +47,15 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
       width: 35.9%;
       align-items: flex-end;
       justify-content: flex-end;
+      a, a:active {
+        color: white;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #5CEEE9;
+      }
       li {
         font-size: 27px;
-        font-weight: 600;
         background: url("~@/assets/images/index/menu_bg.png") no-repeat;
         background-size: 226px 51px;
         height: 51px;
@@ -153,11 +159,13 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
     .flex-con {
       display: flex;
       padding: 15px;
+      height: calc(1080px - 114px);
       .main-left {
         width: 1306px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        height: 100%;
         .map {
           width: 100%;
           height: 610px;
@@ -282,6 +290,35 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
             }
           }
         }
+        .chart-bar {
+          height: 251px;
+          background: rgba(2,18,29,.27);
+          border: 1px solid rgba(195, 255, 249, 0.3);
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          .scales-img {
+            width: 265px;
+            height: 180px;
+            margin-left: 20px;
+            margin-right: 20px;
+            background: linear-gradient(to bottom, #48e9dc, #38a8f2);
+            border-radius: 6px;
+            padding: 3px;
+            overflow: hidden;
+            img {
+              width: 265px;
+              height: 180px;
+              border-radius: 6px;
+              object-fit: cover;
+            }
+          }
+          .bar-line {
+            width: 100%;
+            height: 250px;
+          }
+        }
       }
       .main-right {
         width: 555px;
@@ -394,56 +431,35 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
 
       }
     }
-    .login-box {
-      display: flex;
-      margin: 75px auto 0 auto;
-      width: 671px;
-      height: 524px;
-      background: url("~@/assets/images/login/login_box.png") no-repeat;
-      background-size: 100% auto;
-      box-sizing: border-box;
-      padding: 20px 60px;
-      flex-direction: column;
-      color: #13d5e2;
-      .login-tit {
-        width: 100%;
-        text-align: center;
-        font-size: 24px;
-        font-weight: 600;
-        letter-spacing: 5px;
-        height: 60px;
-        line-height: 60px;
-      }
-      .form {
-        padding: 20px 0;
+    .login-wrap {
+      padding-top: 155px;
+      .login-box {
+        margin: 0 auto;
         display: flex;
+        width: 671px;
+        height: 524px;
+        background: url("~@/assets/images/login/login_box.png") no-repeat;
+        background-size: 100% auto;
+        box-sizing: border-box;
+        padding: 20px 60px;
         flex-direction: column;
-        >input {
-          box-sizing: border-box;
+        color: #13d5e2;
+        .login-tit {
           width: 100%;
-          height: 54px;
-          border: 3px solid #076776;
-          color: #13d5e2;
-          font-size: 20px;
-          position: relative;
-          padding-left: 60px;
-          line-height: 55px;
-          margin-bottom: 25px;
-          &:nth-child(1) {
-            background: #062735 url("~@/assets/images/login/input_icon.png") no-repeat 15px 5px;
-            background-size: 41px 153px;
-          }
-          &:nth-child(2) {
-            background: #062735 url("~@/assets/images/login/input_icon.png") no-repeat 15px -45px;
-            background-size: 41px 153px;
-          }
+          text-align: center;
+          font-size: 24px;
+          font-weight: 600;
+          letter-spacing: 5px;
+          height: 60px;
+          line-height: 60px;
         }
-        label {
+        .form {
+          padding: 20px 0;
           display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          input {
+          flex-direction: column;
+          >input {
             box-sizing: border-box;
+            width: 100%;
             height: 54px;
             border: 3px solid #076776;
             color: #13d5e2;
@@ -451,47 +467,71 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
             position: relative;
             padding-left: 60px;
             line-height: 55px;
-            width: 280px;
-            display: inline-block;
-            background: #062735 url("~@/assets/images/login/input_icon.png") no-repeat 15px -100px;
-            background-size: 41px 153px;
+            margin-bottom: 25px;
+            &:nth-child(1) {
+              background: #062735 url("~@/assets/images/login/input_icon.png") no-repeat 15px 5px;
+              background-size: 41px 153px;
+            }
+            &:nth-child(2) {
+              background: #062735 url("~@/assets/images/login/input_icon.png") no-repeat 15px -45px;
+              background-size: 41px 153px;
+            }
           }
-          em {
-            width: 200px;
-            display: inline-block;
+          label {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            input {
+              box-sizing: border-box;
+              height: 54px;
+              border: 3px solid #076776;
+              color: #13d5e2;
+              font-size: 20px;
+              position: relative;
+              padding-left: 60px;
+              line-height: 55px;
+              width: 280px;
+              display: inline-block;
+              background: #062735 url("~@/assets/images/login/input_icon.png") no-repeat 15px -100px;
+              background-size: 41px 153px;
+            }
+            em {
+              width: 200px;
+              display: inline-block;
+              height: 54px;
+              background-color: white;
+            }
+          }
+          .remember-me {
+            height: 55px;
+            display: flex;
+            align-items: center;
+            span {
+              line-height: 55px;
+              font-size: 16px;
+              color: white;
+              padding-left: 10px;
+            }
+            input[type='checkbox'] {
+              width: 20px;
+              height: 20px;
+              border: 3px solid #076776;
+              background-color: #062735;
+            }
+          }
+          button {
             height: 54px;
-            background-color: white;
-          }
-        }
-        .remember-me {
-          height: 55px;
-          display: flex;
-          align-items: center;
-          span {
-            line-height: 55px;
-            font-size: 16px;
+            width: 100%;
+            background: linear-gradient(90deg, #0CA8CA, #22C3DB);
+            border: none;
+            font-size: 25px;
             color: white;
-            padding-left: 10px;
-          }
-          input[type='checkbox'] {
-            width: 20px;
-            height: 20px;
-            border: 3px solid #076776;
-            background-color: #062735;
+            letter-spacing: 3px;
+            cursor: pointer;
           }
         }
-        button {
-          height: 54px;
-          width: 100%;
-          background: linear-gradient(90deg, #0CA8CA, #22C3DB);
-          border: none;
-          font-size: 25px;
-          color: white;
-          letter-spacing: 3px;
-          cursor: pointer;
-        }
-      }
 
+      }
     }
   }
 }
@@ -511,16 +551,17 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
   }
 }
 .loading {
-  position: absolute;
+  position: fixed;
   top:0;
   left: 0;
   right: 0;
   bottom: 0;
-  //background-color: rgba(0,0,0,.7);
+  background-color: rgba(0,0,0,.7);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
   svg {
     width: 100px;/*px*/
     height: 100px;/*px*/
@@ -531,7 +572,16 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
     animation: breath 3s ease-in-out infinite;
   }
 }
-
+.go-back {
+  position: absolute;
+  background: url("~@/assets/images/measure/go_back.png") no-repeat;
+  background-size: 100% auto;
+  width: 72px;
+  height: 26px;
+  top: 40px;
+  left: 20px;
+  cursor: pointer;
+}
 .toast {
   position: fixed;
   top: 45%;

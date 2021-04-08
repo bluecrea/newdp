@@ -2,7 +2,9 @@
   <header>
     <ul class="menu">
       <template v-if="route.name === 'Home'">
-        <li v-for="item in menuArr" :key="item">{{ item }}</li>
+        <li v-for="item in menuArr" :key="item">
+          <router-link :to="item.link">{{item.name}}</router-link>
+        </li>
       </template>
     </ul>
     <div class="title">
@@ -27,7 +29,7 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const menuArr = ref(['计量','指数', '溯源'])
+    const menuArr = ref([{name:'计量',link: '/measure'},{ name:'指数', link: '/'},{name:'溯源',link:''}])
     const nowDate = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
     const time = setInterval(() => nowDate.value = dayjs().format('YYYY-MM-DD HH:mm:ss'), 1000)
 
