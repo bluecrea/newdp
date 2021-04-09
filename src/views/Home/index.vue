@@ -69,7 +69,7 @@ export default {
         {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
         ]
       mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
-      getOnMap('shenzhen').then(res => {
+      getOnMap('sz').then(res => {
         let chart = echarts.init(document.getElementById('map'))
         echarts.registerMap('shenzhen',res.data)
         /*chart.on('click',(params) => {

@@ -17,7 +17,13 @@ const routes = [
     path: '/measure',
     name: 'measure',
     component: () => import('@/views/Measure'),
-    meta: { title: '区详情' }
+    meta: { title: '计量' }
+  },
+  {
+    path: '/detail',
+    name: 'detail',
+    component: () => import('@/views/Measure/detail'),
+    meta: { title: '区域计量详情' }
   }
 ]
 

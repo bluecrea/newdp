@@ -160,6 +160,7 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
       display: flex;
       padding: 15px;
       height: calc(1080px - 114px);
+      justify-content: space-between;
       .main-left {
         width: 1306px;
         display: flex;
@@ -429,6 +430,137 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
           }
         }
 
+      }
+      .main-measure-right {
+        width: 555px;
+        height: 957px;
+        .pie-chart {
+          width: 548px;
+          height: 221px;
+          background: rgba(2,18,29,.27);
+          border: 1px solid rgba(195, 255, 249, 0.3);
+          position: relative;
+          .pie-title {
+            margin: 18px 0 0 15px;
+            width: 174px;
+            height: 34px;
+            font-size: 16px;
+            color: #49FDFF;
+            text-align: center;
+            line-height: 30px;
+            position: relative;
+            font-weight: 400;
+            &:before,&:after {
+              position: absolute;
+              content: '';
+              width: 6px;
+              height: 30px;
+              border: 1px solid #49fdff;
+              top: 0;
+            }
+            &:before {
+              left: 0;
+              border-right-width: 0;
+            }
+            &:after {
+              right: 0;
+              border-left-width: 0;
+            }
+          }
+          .pie-con {
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+          }
+        }
+        .hor-bar {
+          width: 548px;
+          height: 465px;
+          margin-top: 10px;
+          background: rgba(2,18,29,.27);
+          border: 1px solid rgba(195, 255, 249, 0.3);
+          position: relative;
+          .bar-con {
+            position: absolute;
+            top: 40px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+          }
+        }
+        .bar-title {
+          margin: 10px 0 0 15px;
+          width: 174px;
+          height: 40px;
+          font-size: 16px;
+          color: #49FDFF;
+          line-height: 30px;
+          position: relative;
+          font-weight: 400;
+          &:before,&:after {
+            position: absolute;
+            bottom: 0;
+            content: '';
+          }
+          &:before {
+            left: 0;
+            height: 4px;
+            width: 56px;
+            background: #FFA82C;
+          }
+          &:after {
+            left: 56px;
+            bottom: 2px;
+            width: 109px;
+            height: 1px;
+            background: #FFFFFF;
+            opacity: 0.51;
+          }
+        }
+        .complaint {
+          width: 548px;
+          height: 250px;
+          margin-top: 12px;
+          background: rgba(2,18,29,.27);
+          border: 1px solid rgba(195, 255, 249, 0.3);
+          position: relative;
+          ul.flex-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 500px;
+            margin: 0 auto;
+            li {
+              width: 208px;
+              height: 71px;
+              background: url("~@/assets/images/measure/complaint.png") no-repeat;
+              background-size: 208px 71px;
+              margin-top: 20px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              &.active {
+                background: url("~@/assets/images/measure/complaint_active.png") no-repeat;
+                background-size: 208px 71px;
+              }
+              h4 {
+                color: #F77B0D;
+                font-size: 17px;
+                font-weight: bold;
+                line-height: 30px;
+              }
+              em {
+                font-size: 14px;
+                font-weight: bold;
+                color: #fff;
+                font-style: normal;
+              }
+            }
+          }
+        }
       }
     }
     .login-wrap {

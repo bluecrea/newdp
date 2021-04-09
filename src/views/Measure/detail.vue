@@ -16,7 +16,7 @@
       </div>
       <div class="main-measure-right">
         <pie-chart/>
-        <horizontal-bar barTit="各区"/>
+        <horizontal-bar bar-tit="各街道"/>
         <div class="complaint">
           <div class="bar-title">投诉与处理</div>
           <ul class="flex-box">
@@ -24,15 +24,15 @@
               <h4>缺斤少两</h4>
               <em>2021-04-09</em>
             </li>
+            <li>
+              <h4>缺斤少两</h4>
+              <em>2021-04-09</em>
+            </li>
+            <li>
+              <h4>缺斤少两</h4>
+              <em>2021-04-09</em>
+            </li>
             <li class="active">
-              <h4>缺斤少两</h4>
-              <em>2021-04-09</em>
-            </li>
-            <li>
-              <h4>缺斤少两</h4>
-              <em>2021-04-09</em>
-            </li>
-            <li>
               <h4>缺斤少两</h4>
               <em>2021-04-09</em>
             </li>
@@ -44,38 +44,40 @@
 
 </template>
 <script>
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
-import { getOnMap } from '@/utils/api'
-import echarts from 'echarts'
 import Loading from '@/components/loading'
-import { mapOption } from "@/views/Home/components/map"
 import ScalesData from './components/ScalesData'
 import PieChart from './components/PieChart'
 import HorizontalBar from './components/HorizontalBar'
+import { getMap } from './components/InitMap'
 
 export default {
   name: 'measure',
   setup() {
+    const route = useRoute()
     const router = useRouter()
+    document.title = route.query.name + '- 计量监管系统'
     const initMap = () => {
-      mapOption.series[1].data = [
-        {name: '在线', value: [114.136252,22.656084, 2], symbolSize: 5},
-        {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
-      ]
-      mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
-      getOnMap('sz').then(res => {
-        let chart = echarts.init(document.getElementById('measureMap'))
-        echarts.registerMap('shenzhen',res.data)
-        dtLoading.value = false
-        chart.on('click',(params) => {
-          router.push({path: '/detail', query: {name: params.name}})
-        })
-        chart.setOption(mapOption)
-        window.addEventListener('resize', () => {
-          chart.resize();
-        })
-      })
+      let option = {
+        geo: {
+          map: '',
+          layoutCenter: ['45%', '50%'],
+          layoutSize: 580,
+          itemStyle:{
+            normal: {
+              areaColor: '#277b97',
+              shadowColor: '#075289',
+              shadowBlur: 5,
+              shadowOffsetX: 0,
+              shadowOffsetY: 10,
+            },
+          },
+        },
+      }
+      option.geo.map = route.query.name
+      getMap('measureMap',route.query.name, option)
+      dtLoading.value = false
     }
     const dtLoading = ref(true)
     const goBack = () => {

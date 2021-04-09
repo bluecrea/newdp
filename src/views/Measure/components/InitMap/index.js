@@ -14,7 +14,7 @@ const cityMap = [
   { city: '光明新区', id: '440311'},
   { city: '大鹏新区', id: '440343'},
   { city: '前海自贸区', id: '440377'},
-  { city: '深汕合作区', id: '440388'},
+  { city: '深汕', id: '440388'},
 ]
 
 export const getMap = (eleId, name, mapOption)  => {
@@ -26,7 +26,9 @@ export const getMap = (eleId, name, mapOption)  => {
   })
   getOnMap(id).then(res => {
     let chart = echarts.init(document.getElementById(eleId))
+    chart.showLoading()
     echarts.registerMap(name, res.data)
     chart.setOption(mapOption)
+    chart.hideLoading()
   })
 }
