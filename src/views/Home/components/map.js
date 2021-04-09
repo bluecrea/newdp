@@ -81,6 +81,7 @@ export const mapOption = {
     name: '在线',
     type: 'effectScatter',
     coordinateSystem: 'geo',
+    silent: true,
     rippleEffect: { //涟漪特效
       period: 5, //动画时间，值越小速度越快
       brushType: 'stroke', //波纹绘制方式 stroke, fill
