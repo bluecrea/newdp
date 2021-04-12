@@ -49,7 +49,7 @@ import { onMounted, ref } from 'vue'
 import { getOnMap } from '@/utils/api'
 import echarts from 'echarts'
 import Loading from '@/components/loading'
-import { mapOption } from "@/views/Home/components/map"
+import { option } from "./components/mapOption"
 import ScalesData from './components/ScalesData'
 import PieChart from './components/PieChart'
 import HorizontalBar from './components/HorizontalBar'
@@ -59,11 +59,11 @@ export default {
   setup() {
     const router = useRouter()
     const initMap = () => {
-      mapOption.series[1].data = [
+      option.series[1].data = [
         {name: '在线', value: [114.136252,22.656084, 2], symbolSize: 5},
         {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
       ]
-      mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
+      option.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
       getOnMap('sz').then(res => {
         let chart = echarts.init(document.getElementById('measureMap'))
         echarts.registerMap('shenzhen',res.data)
@@ -71,7 +71,7 @@ export default {
         chart.on('click',(params) => {
           router.push({path: '/detail', query: {name: params.name}})
         })
-        chart.setOption(mapOption)
+        chart.setOption(option)
         window.addEventListener('resize', () => {
           chart.resize();
         })

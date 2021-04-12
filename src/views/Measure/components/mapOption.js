@@ -1,4 +1,4 @@
-export const mapOption = {
+export const option = {
   geo: {
     map: 'shenzhen',
     left: '5%',
@@ -65,7 +65,7 @@ export const mapOption = {
     right: '18%',
     top: 0,
     bottom: '10px',
-    silent: true,
+    silent: false,
     itemStyle: {
       normal: {
         areaColor: '#277b97',

@@ -72,9 +72,6 @@ export default {
       getOnMap('sz').then(res => {
         let chart = echarts.init(document.getElementById('map'))
         echarts.registerMap('shenzhen',res.data)
-        /*chart.on('click',(params) => {
-          router.push({path: '/measure', query: {name: params.name}})
-        })*/
         chart.setOption(mapOption)
         window.addEventListener('resize', () => {
           chart.resize();
