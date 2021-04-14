@@ -30,6 +30,12 @@ const routes = [
     name: 'monitor',
     component: () => import('@/views/Measure/monitorDetail'),
     meta: { title: '市场详情' }
+  },
+  {
+    path: '/cpi',
+    name: 'cpi',
+    component: () => import('@/views/Cpi'),
+    meta: { title: '指数' }
   }
 ]
 

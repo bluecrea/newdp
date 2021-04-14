@@ -895,7 +895,150 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
         }
       }
     }
-
+    .cpi {
+      display: flex;
+      padding: 15px;
+      height: calc(1080px - 114px);
+      justify-content: space-between;
+      .flex-left,.flex-right {
+        width: 370px;
+        height: 100%;
+        .box-header {
+          width: 100%;
+          background: url("~@/assets/images/cpi/box_t.png") no-repeat top left;
+          background-size: 370px 83px;
+          padding: 50px 0 0 15px;
+          height: 80px;
+          box-sizing: border-box;
+          h4 {
+            height: 25px;
+            font-size: 22px;
+            text-align: center;
+            color: #FEFEFE;
+            line-height: 24px;
+            background: linear-gradient(0deg, #FFFFFF 45%, #9DA6B5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        }
+        .box-cen {
+          width: 100%;
+          background: url("~@/assets/images/cpi/box_c.png") repeat-y 0 0;
+          background-size: 370px 1px;
+          h5 {
+            height: 40px;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 17px;
+            color: #fff;
+            text-shadow: 0 1px 10px #00deff;/*no*/
+          }
+          .bar-one {
+            width: 100%;
+            height: 370px;
+            padding: 5px 10px;
+            box-sizing: border-box;
+          }
+          li {
+            width: 170px;
+            height: 110px;
+            background: url("~@/assets/images/cpi/r_box.png") no-repeat;
+            background-size: 170px 110px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 15px 20px;
+            span {
+              font-size: 14px;
+              color: #fff;
+              line-height: 25px;
+              height: 25px;
+              display: block;
+              text-shadow: -1px 1px 10px #00fba2;/*no*/
+              &.increase,&.decline {
+                font-size: 30px;
+                height: 35px;
+                line-height: 35px;
+                font-family: "CourierPrime", sans-serif;
+                letter-spacing: -2px;
+                text-shadow: none;
+              }
+              &.increase {
+                color: #fd0606;
+              }
+              &.decline {
+                color: #03ffb5;
+              }
+            }
+          }
+        }
+        .box-bottom {
+          width: 100%;
+          background:url("~@/assets/images/cpi/box_b.png") no-repeat 0 0;
+          background-size: 370px 60px;
+          height: 60px;
+          margin-top: -30px;
+        }
+      }
+      .flex-center {
+        width: 1070px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .cpi-map {
+          width: 100%;
+          height: 760px;
+        }
+        .cpi-bot {
+          background: url("~@/assets/images/cpi/box.png") no-repeat 0 0;
+          background-size: 1070px 269px;
+          height: 296px;
+          width: 1070px;
+          display: flex;
+          position: relative;
+          .legend {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            .c-title {
+              margin: 20px 0 10px 25px;
+              padding-left: 36px;
+              background: url("~@/assets/images/cpi/icon_c_t.png") no-repeat 0 center;
+              background-size: 36px 35px;
+              height: 40px;
+              line-height: 40px;
+              color: white;
+              font-size: 16px;
+            }
+            ul.status {
+              padding-left: 25px;
+              li {
+                color: white;
+                height: 25px;
+              }
+            }
+          }
+          .cpi-line {
+            width: 80%;
+            height: 100%;
+          }
+        }
+      }
+      .flex-right {
+        width: 375px;
+        height: 100%;
+        ul.box-cen {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-content: flex-start;
+          box-sizing: border-box;
+          padding-top: 20px;
+          min-height: 850px;
+        }
+      }
+    }
     .login-wrap {
       padding-top: 155px;
       .login-box {
