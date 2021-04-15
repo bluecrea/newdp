@@ -98,33 +98,6 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
         -webkit-background-clip: text;
         -webkit-text-fill-color: rgba(255,255,255,.1);
       }
-      /*.gradient {
-        width: 50%;
-        height: 100%;
-        position: absolute;
-        animation: moveflash 5s infinite;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        &:before,&:after {
-          content: ' ';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 50%;
-          height: 100%;
-          opacity: 0.35;
-          background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
-        }
-        &:before {
-          content: ' ';
-          position: absolute;
-          left: 50%;
-          width: 50%;
-          background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
-        }
-      }*/
       .line {
         position: absolute;
         width: 332px;
@@ -896,10 +869,6 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
       }
     }
     .cpi {
-      display: flex;
-      padding: 15px;
-      height: calc(1080px - 114px);
-      justify-content: space-between;
       .flex-left,.flex-right {
         width: 370px;
         height: 100%;
@@ -991,14 +960,13 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
         }
         .cpi-bot {
           background: url("~@/assets/images/cpi/box.png") no-repeat 0 0;
-          background-size: 1070px 269px;
+          background-size: 1070px 296px;
           height: 296px;
           width: 1070px;
           display: flex;
           position: relative;
           .legend {
             width: 20%;
-            height: 100%;
             display: flex;
             flex-direction: column;
             .c-title {
@@ -1016,6 +984,39 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
               li {
                 color: white;
                 height: 25px;
+                padding-left: 20px;
+                line-height: 25px;
+                font-size: 15px;
+                position: relative;
+                &:before {
+                  position: absolute;
+                  left: 0;
+                  top: 6.5px;
+                  content: '';
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  display: inline-block;
+                }
+                &:nth-of-type(1):before {
+                  background-color: red;
+                }
+                &:nth-of-type(2):before {
+                  background-color: #00ff66;
+                }
+                &:nth-of-type(3):before {
+                  background-color: #53d1f1;
+                }
+                &:nth-of-type(4) {
+                  padding-left: 35px;
+                  &:before {
+                    top: 11px;
+                    width: 30px;
+                    height: 3px;
+                    background-color: #53d1f1;
+                    border-radius: 0;
+                  }
+                }
               }
             }
           }
@@ -1037,6 +1038,37 @@ blockquote, body, span, code, dd, div, dl, dt, fieldset, figure, form, h1, h2, h
           padding-top: 20px;
           min-height: 850px;
         }
+      }
+    }
+    .traceability {
+      .traceability-con {
+        padding: 15px;
+        height: calc(1080px - 114px);
+        display: flex;
+        flex-direction: column;
+        .flex-pic {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 1552px;
+          margin: 0 auto;
+          .map-con {
+            width: 1310px;
+            height: 720px;
+          }
+          .pic-right {
+            background: url("~@/assets/images/traceability/pic_right.png") no-repeat 0 bottom;
+            background-size: 242px 661px;
+            width: 242px;
+            height: 720px;
+          }
+        }
+      }
+      .pic_bottom {
+        background: url("~@/assets/images/traceability/pic_bottom.png") no-repeat center top;
+        width: 1552px;
+        height: 200px;
+        margin: 10px auto;
       }
     }
     .login-wrap {

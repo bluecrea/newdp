@@ -36,6 +36,12 @@ const routes = [
     name: 'cpi',
     component: () => import('@/views/Cpi'),
     meta: { title: '指数' }
+  },
+  {
+    path: '/traceability',
+    name: 'traceability',
+    component: () => import('@/views/Traceability'),
+    meta: { title: '溯源' }
   }
 ]
 

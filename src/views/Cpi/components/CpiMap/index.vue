@@ -32,7 +32,7 @@ export default {
         type: 'continuous',
         orient: 'horizontal',
         itemHeight: 100,
-        text: ['跌','涨'],
+        text: ['涨','跌'],
         textStyle: {
           color: '#fff',
           fontSize: 15,
@@ -61,7 +61,6 @@ export default {
           normal: {
             show: true,
             formatter: params => {
-              console.log(params.data)
               if (params.data.value > 0) {
                 return  '{name|'+ params.data.name +'}\n{jump|+'+ params.data.value +'%}'
               } else {

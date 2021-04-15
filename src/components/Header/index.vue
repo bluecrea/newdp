@@ -29,7 +29,7 @@ export default {
   },
   setup() {
     const route = useRoute()
-    const menuArr = ref([{name:'计量',link: '/measure'},{ name:'指数', link: '/'},{name:'溯源',link:''}])
+    const menuArr = ref([{name:'计量',link: '/measure'},{ name:'指数', link: '/cpi'},{name:'溯源',link:'/traceability'}])
     const nowDate = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
     const time = setInterval(() => nowDate.value = dayjs().format('YYYY-MM-DD HH:mm:ss'), 1000)
 

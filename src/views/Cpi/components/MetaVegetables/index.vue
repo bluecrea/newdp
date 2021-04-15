@@ -5,7 +5,7 @@
       <ul class="status">
         <li>最高</li>
         <li>最低</li>
-        <li>今天</li>
+        <li>平均</li>
         <li>物价指数</li>
       </ul>
     </div>
