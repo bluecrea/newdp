@@ -1,18 +1,15 @@
 <template>
-  <div class="swiper-container swiper">
+  <div class="swiper-container swiper" v-if="imgLength.length>0">
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
+      <div class="swiper-slide" v-for="(item, index) in imgLength" :key="index">
         <img src="https://goss.cfp.cn/creative/vcg/800/new/VCG41N728851723.jpg" alt="">
-      </div>
-      <div class="swiper-slide">
-        <img src="https://img5.51tietu.net/pic/2019-081313/101l4yex5sj101l4yex5sj.jpg" alt="">
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, nextTick, onMounted } from 'vue'
 import Swiper, {Autoplay, EffectCoverflow, Pagination, Navigation} from 'swiper'
 Swiper.use([Autoplay, EffectCoverflow, Pagination, Navigation])
 import '@/assets/style/swiper.less'
@@ -20,32 +17,42 @@ import '@/assets/style/swiper.less'
 export default defineComponent({
   name: 'SwiperCon',
   emits: ['realIndex'],
-  setup(props, ctx) {
+  props: {
+    imgLength: {
+      type: Array
+    }
+  },
+  setup(prop, ctx) {
     onMounted(() => {
-      new Swiper('.swiper-container', {
-        loop: true, // false: this.activeIndex
-        spaceBetween: 25,
-        effect: "cube",
-        grabCursor: true,
-        centeredSlides: true,
-        //slidesPerView: 'auto',
-        autoplay: {
-          delay: 4500,
-          stopOnLastSlide: false,
-          disableOnInteraction: false,
-        },
-        coverflowEffect: {
-          rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        },
-        on: {
-          slideChange: (e) => {
-            ctx.emit('realIndex', e.realIndex)
+      nextTick(() => {
+        new Swiper('.swiper-container', {
+          loop: true, // false: this.activeIndex
+          initialSlide: 0,
+          observer:true,
+          observeParents:true,
+          spaceBetween: 25,
+          effect: "cube",
+          grabCursor: true,
+          centeredSlides: true,
+          //slidesPerView: 'auto',
+          autoplay: true,
+          /*autoplay: {
+            delay: 4500,
+            disableOnInteraction: false,
+          },*/
+          coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
           },
-        },
+          on: {
+            slideChange: (e) => {
+              ctx.emit('realIndex', e.realIndex)
+            },
+          },
+        })
       })
     })
   }

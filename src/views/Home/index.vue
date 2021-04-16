@@ -7,7 +7,7 @@
           <div class="title">{{ realObj.marketName }}</div>
           <div class="img-con">
             <div class="img">
-              <swiper-con @realIndex="realIndex"/>
+              <swiper-con @realIndex="realIndex" :img-length="realArr"/>
             </div>
             <ul class="list" v-if="realIndex">
               <li>挡位数 <span>{{ realObj.stallNum }}</span> 个</li>
@@ -44,8 +44,8 @@
 
 <script>
 import { onMounted, ref } from 'vue'
-import { mapOption } from "@/views/Home/components/map"
-import { getOnMap } from '@/utils/api'
+import { getOnMap, getAreaMarketInfo, getDeviceInfo, getMarketStatistics } from '@/utils/api'
+import { mapOption } from "./components/map"
 import dataMonitor from './components/DataMonitor'
 import tableMarquee from './components/TableMarquee'
 import NumRoll from './components/NumRoll'
@@ -63,28 +63,52 @@ export default {
       { name: 'marketAccess', data: 0, title: '接入市场', img: require('../../assets/images/index/list_2.png')},
       { name: 'scalesAccess', data: 0, title: '接入秤数', img: require('../../assets/images/index/list_3.png')}
     ])
+    const realObj = ref({})
+    const realArr = ref([])
     const initMap = () => {
-      mapOption.series[1].data = [
-        {name: '在线', value: [114.136252,22.656084, 2], symbolSize: 5},
-        {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
-        ]
-      mapOption.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
+      let chart = echarts.init(document.getElementById('map'))
       getOnMap('sz').then(res => {
-        let chart = echarts.init(document.getElementById('map'))
         echarts.registerMap('shenzhen',res.data)
-        chart.setOption(mapOption)
-        window.addEventListener('resize', () => {
-          chart.resize();
-        })
       })
+      getAreaMarketInfo({}).then(res => {
+        if (res.result.success) {
+          accessArr.value[0].data = res.data.allMarketTotal
+          accessArr.value[1].data = res.data.onlineMarketTotal
+          accessArr.value[2].data = res.data.onlineDeviceTotal
+          res.data.marketItems.forEach(item => {
+            if (item.marketStatus === 0) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 10 }
+              mapOption.series[2].data.push(obj)
+            } else {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 4 }
+              mapOption.series[1].data.push(obj)
+            }
+          })
 
+          chart.setOption(mapOption)
+          window.addEventListener('resize', () => {
+            chart.resize();
+          })
+        }
+      })
+      getDeviceInfo({}).then(res => {
+        console.log(res)
+      })
+      getMarketStatistics({}).then(res => {
+        if (res.result.success) {
+          res.data.forEach(item => {
+            let obj = {marketName: item.market.marketName, stallNum: item.stallNum, deviceNum: item.deviceNum, tradeQty: item.tradeQty, abnormalDeviceNum: item.abnormalDeviceNum}
+            realArr.value.push(obj)
+          })
+        }
+      })
       let num = 2568782
       numberArr.value = setNumberTransform(num)
       setInterval(() => {
         num ++
         numberArr.value = setNumberTransform(num)
       }, 5000)
-      accessArr.value[0].data = 96
+
       toDayArr.value = setNumberTransform(32341)
     }
     const setNumberTransform = (num) => {
@@ -97,18 +121,14 @@ export default {
       }
       return num
     }
-    const realObj = ref({})
+
     const realIndex = (params) => {
-      let realArr = [
-        {marketName: '横岗第一市场', stallNum: 20, deviceNum: 15, tradeQty: 1200, abnormalDeviceNum: 1},
-        {marketName: '横岗第二市场', stallNum: 25, deviceNum: 25, tradeQty: 1300, abnormalDeviceNum: 2}
-      ]
-      realObj.value = realArr[params]
+      realObj.value = realArr.value[params]
     }
     onMounted(() => {
       initMap()
     })
-    return { numberArr, accessArr, toDayArr,realIndex,realObj }
+    return { numberArr, accessArr, toDayArr, realIndex, realArr, realObj }
   },
   components: {
     dataMonitor,

@@ -3,7 +3,7 @@ import {getOnMap} from '@/utils/api'
 import { useRouter } from 'vue-router'
 
 export const cityMap = [
-  { area: '深圳',id: 'shenzhen' },
+  { area: '深圳',id: '440301' },
   { area: '罗湖区', id: '440303'},
   { area: '福田区', id: '440304'},
   { area: '南山区', id: '440305'},
@@ -13,7 +13,7 @@ export const cityMap = [
   { area: '龙华区', id: '440309'},
   { area: '坪山区', id: '440310'},
   { area: '光明新区', id: '440311'},
-  { area: '大鹏新区', id: '440343'},
+  { area: '大鹏新区', id: '440376'},
   { area: '前海自贸区', id: '440377'},
   { area: '深汕', id: '440388'},
 ]
