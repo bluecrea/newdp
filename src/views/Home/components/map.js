@@ -86,12 +86,13 @@ export const mapOption = {
     rippleEffect: { //涟漪特效
       period: 5, //动画时间，值越小速度越快
       brushType: 'stroke', //波纹绘制方式 stroke, fill
-      scale: 3 //波纹圆环最大限制，值越大波纹越大
+      scale: 2 //波纹圆环最大限制，值越大波纹越大
     },
     data: [],
   }, {
     name: '不在线',
     type: 'scatter',
+    silent: true,
     coordinateSystem: 'geo',
     data: []
   }]

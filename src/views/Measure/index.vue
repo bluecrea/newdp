@@ -15,27 +15,17 @@
         </div>
       </div>
       <div class="main-measure-right">
-        <pie-chart/>
-        <horizontal-bar barTit="各区"/>
+        <pie-chart v-if="pieOpsData.length > 0" :pie-ops-data="pieOpsData" :total="pieOpsTotal"/>
+        <horizontal-bar barTit="各区" v-if="areaArray.length > 0" :area-name-list="areaArray" :series-data="seriesObj"/>
         <div class="complaint">
           <div class="bar-title">投诉与处理</div>
           <ul class="flex-box">
-            <li>
-              <h4>缺斤少两</h4>
-              <em>2021-04-09</em>
-            </li>
-            <li class="active">
-              <h4>缺斤少两</h4>
-              <em>2021-04-09</em>
-            </li>
-            <li>
-              <h4>缺斤少两</h4>
-              <em>2021-04-09</em>
-            </li>
-            <li>
-              <h4>缺斤少两</h4>
-              <em>2021-04-09</em>
-            </li>
+            <template v-for="(item,index) in complaintList" :key="index">
+              <li v-if="index < 5">
+                <h4>{{ item.complaintContents }}</h4>
+                <em>2021-04-09</em>
+              </li>
+            </template>
           </ul>
         </div>
       </div>
@@ -46,7 +36,7 @@
 <script>
 import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
-import { getOnMap } from '@/utils/api'
+import { getAreaMarketInfo, getOnMap, getDeviceStatistics, getComplaintList } from '@/utils/api'
 import echarts from 'echarts'
 import Loading from '@/components/loading'
 import { option } from "./components/mapOption"
@@ -58,33 +48,70 @@ export default {
   name: 'measure',
   setup() {
     const router = useRouter()
-    const initMap = () => {
-      option.series[1].data = [
-        {name: '在线', value: [114.136252,22.656084, 2], symbolSize: 5},
-        {name: '在线', value: [114.610085,22.806701, 2], symbolSize: 8 }
-      ]
-      option.series[2].data = [{name:'不在线', value: [113.888032,22.522744, 0], symbolSize: 6}]
-      getOnMap('sz').then(res => {
-        let chart = echarts.init(document.getElementById('measureMap'))
-        echarts.registerMap('shenzhen',res.data)
-        dtLoading.value = false
-        chart.on('click',(params) => {
-          router.push({path: '/detail', query: {name: params.name}})
-        })
-        chart.setOption(option)
-        window.addEventListener('resize', () => {
-          chart.resize();
-        })
-      })
-    }
+    const pieOpsData = ref([])
+    const areaArray = ref([])
+    const seriesObj = ref([])
+    const pieOpsTotal = ref(0)
     const dtLoading = ref(true)
+    const complaintList = ref([])
     const goBack = () => {
       router.back()
+    }
+    const initMap = () => {
+      let chart = echarts.init(document.getElementById('measureMap'))
+      getOnMap('sz').then(res => {
+        echarts.registerMap('shenzhen',res.data)
+      })
+      getAreaMarketInfo({}).then(res => {
+        if (res.result.success) {
+          res.data.marketItems.forEach(item => {
+            if (item.marketStatus === 0) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 8 }
+              option.series[2].data.push(obj)
+            } else {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum/2 }
+              option.series[1].data.push(obj)
+            }
+          })
+          chart.setOption(option)
+          window.addEventListener('resize', () => {
+            chart.resize();
+          })
+          chart.on('click',(params) => {
+            router.push({path: '/detail', query: {name: params.name}})
+          })
+        }
+      })
+      getData()
+    }
+    const getData = () => {
+      getDeviceStatistics({}).then(res => {
+        if (res.result.success) {
+          pieOpsData.value = res.data.items
+          pieOpsTotal.value = res.data.deviceTotal
+          let obj = {}
+          res.data.areaItems.forEach(item => {
+            areaArray.value.push(item.areaName)
+            item.items.forEach(val => {
+              let { name } = val
+              if (!obj[name]) obj[name] = { name, data: [] }
+              obj[name].data.push(val.value)
+            })
+          })
+          seriesObj.value = Object.values(obj)
+        }
+      })
+      getComplaintList({}).then(res => {
+        if (res.result.success) {
+          complaintList.value = res.items
+        }
+      })
+      dtLoading.value = false
     }
     onMounted(() => {
       initMap()
     })
-    return {dtLoading,goBack}
+    return {dtLoading,goBack,pieOpsData,pieOpsTotal, areaArray, seriesObj, complaintList}
   },
   components: {
     Loading,

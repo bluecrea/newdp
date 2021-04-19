@@ -35,7 +35,7 @@
         </div>
         <div class="title">肉菜价格指数</div>
         <div class="line-box">
-          <area-pieces/>
+          <meta-vegetables/>
         </div>
       </div>
     </div>
@@ -44,13 +44,13 @@
 
 <script>
 import { onMounted, ref } from 'vue'
-import { getOnMap, getAreaMarketInfo, getDeviceInfo, getMarketStatistics } from '@/utils/api'
+import { getOnMap, getAreaMarketInfo, getMarketStatistics, getStallStatisticsInfo } from '@/utils/api'
 import { mapOption } from "./components/map"
 import dataMonitor from './components/DataMonitor'
 import tableMarquee from './components/TableMarquee'
 import NumRoll from './components/NumRoll'
 import SwiperCon from './components/SwiperCon'
-import AreaPieces from './components/AreaPieces'
+import MetaVegetables from '@/views/Cpi/components/MetaVegetables'
 import echarts from 'echarts'
 
 export default {
@@ -77,10 +77,10 @@ export default {
           accessArr.value[2].data = res.data.onlineDeviceTotal
           res.data.marketItems.forEach(item => {
             if (item.marketStatus === 0) {
-              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 10 }
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 8 }
               mapOption.series[2].data.push(obj)
             } else {
-              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 4 }
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum/2 }
               mapOption.series[1].data.push(obj)
             }
           })
@@ -91,15 +91,17 @@ export default {
           })
         }
       })
-      getDeviceInfo({}).then(res => {
-        console.log(res)
-      })
       getMarketStatistics({}).then(res => {
         if (res.result.success) {
           res.data.forEach(item => {
             let obj = {marketName: item.market.marketName, stallNum: item.stallNum, deviceNum: item.deviceNum, tradeQty: item.tradeQty, abnormalDeviceNum: item.abnormalDeviceNum}
             realArr.value.push(obj)
           })
+        }
+      })
+      getStallStatisticsInfo({}).then(res => {
+        if (res.result.success) {
+          console.log(res.data)
         }
       })
       let num = 2568782
@@ -135,7 +137,7 @@ export default {
     NumRoll,
     SwiperCon,
     tableMarquee,
-    AreaPieces,
+    MetaVegetables,
   }
 }
 </script>

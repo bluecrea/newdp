@@ -1,29 +1,14 @@
 <template>
-  <div class="cpi-bot">
-    <div class="legend">
-      <div class="c-title">肉菜价格指数</div>
-      <ul class="status">
-        <li>最高</li>
-        <li>最低</li>
-        <li>平均</li>
-        <li>物价指数</li>
-      </ul>
-    </div>
-    <div class="cpi-line" ref="cpiLine"/>
-  </div>
+  <div class="cpi-line" ref="cpiLine"/>
 </template>
 <script>
 import { nextTick, ref } from 'vue'
 import echarts from 'echarts'
+import { getPriceTrendData } from '@/utils/api'
 
 export default {
   name: 'MetaVegetables',
-  props: {
-    lineOptions: {
-      type: Object
-    }
-  },
-  setup(props) {
+  setup() {
     const cpiLine = ref(null)
     const options = {
       tooltip: {
@@ -57,7 +42,7 @@ export default {
           splitLine: {
             show: false,
           },
-          data: props.lineOptions.xData
+          data: []
         }
       ],
       yAxis: [{
@@ -136,15 +121,25 @@ export default {
             }
           ]
         },
-        data: props.lineOptions.seriesData
+        data: []
       }]
     }
-    nextTick(() => {
-      let chart = echarts.init(cpiLine.value)
-      chart.setOption(options)
-      window.addEventListener('resize', () => {
-        chart.resize();
-      })
+    getPriceTrendData({}).then(res => {
+      if (res.result.success) {
+        if (res.data.length > 1) {
+          res.data.forEach(item => {
+            options.xAxis[0].data.push(item.date.slice(5,10))
+            options.series[0].data.push(item.index)
+          })
+          nextTick(() => {
+            let chart = echarts.init(cpiLine.value)
+            chart.setOption(options)
+            window.addEventListener('resize', () => {
+              chart.resize();
+            })
+          })
+        }
+      }
     })
     return {cpiLine}
   }

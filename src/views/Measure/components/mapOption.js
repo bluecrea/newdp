@@ -92,6 +92,7 @@ export const option = {
   }, {
     name: '不在线',
     type: 'scatter',
+    silent: true,
     coordinateSystem: 'geo',
     data: []
   }]

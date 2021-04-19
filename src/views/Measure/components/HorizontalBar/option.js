@@ -40,10 +40,10 @@ export const barOption = {
       color: '#fff',
       fontSize: 16
     },
-    data: ['罗湖', '福田', '南山', '宝安', '光明', '龙岗', '龙华', '盐田', '坪山', '大鹏', '前海', '深汕']
+    data: []
   },
   series: [{
-    name: '正常',
+    name: '',
     type: 'bar',
     stack: '1',
     label: {
@@ -58,9 +58,9 @@ export const barOption = {
         color: '#00c800'
       }
     },
-    data: [320, 302, 301, 334, 390, 330, 320, 36, 69, 562, 150, 300]
+    data: []
   },{
-    name: '预警',
+    name: '',
     type: 'bar',
     stack: '1',
     label: {
@@ -75,9 +75,9 @@ export const barOption = {
         color: '#f95252'
       }
     },
-    data: [20, 13, 10, 34, 90, 30, 10, 8, 12, 5, 7, 12]
+    data: []
   },{
-    name: '不在线',
+    name: '',
     type: 'bar',
     stack: '1',
     label: {
@@ -92,6 +92,40 @@ export const barOption = {
         color: '#69a2f6'
       }
     },
-    data: [8, 23, 15, 14, 10, 3, 1, 8, 2, 5, 7, 2]
+    data: []
+  }, {
+    name: '',
+    type: 'bar',
+    stack: '1',
+    label: {
+      normal: {
+        show: true,
+        position: 'right'
+      }
+    },
+    barCategoryGap: '40%',
+    itemStyle: {
+      normal: {
+        color: '#2a3400'
+      }
+    },
+    data: []
+  },{
+    name: '',
+    type: 'bar',
+    stack: '1',
+    label: {
+      normal: {
+        show: true,
+        position: 'right'
+      }
+    },
+    barCategoryGap: '40%',
+    itemStyle: {
+      normal: {
+        color: '#0567f6'
+      }
+    },
+    data: []
   }]
 }

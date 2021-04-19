@@ -1,8 +1,3 @@
-let data = [
-  {value: 335, name: '正常'},
-  {value: 310, name: '预警'},
-  {value: 234, name: '15天不在线'},
-]
 export const pieOption = {
   /*tooltip: {
     trigger: 'item',
@@ -10,7 +5,7 @@ export const pieOption = {
   },*/
   color: ['#66ff66','#ff0000','#2c7bf0'],
   title: {
-    text: '{name|秤总数}\n{val|2000台}',// '{name|' + title + '}\n{val|' + formatNumber(total) + '}',
+    text: '',// '{name|' + title + '}\n{val|' + formatNumber(total) + '}',
     x: 'center',
     y: 'center',
     /*top: 'center',
@@ -75,6 +70,6 @@ export const pieOption = {
         borderWidth: 3,
       },
     },
-    data: data
+    data: []
   }]
 }

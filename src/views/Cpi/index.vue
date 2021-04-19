@@ -17,7 +17,18 @@
       </div>
       <div class="flex-center">
         <cpi-map :map-ops="mapOptions"/>
-        <meta-vegetables :line-options="lineOps"/>
+        <div class="cpi-bot">
+          <div class="legend">
+            <div class="c-title">肉菜价格指数</div>
+            <ul class="status">
+              <li>最高</li>
+              <li>最低</li>
+              <li>平均</li>
+              <li>物价指数</li>
+            </ul>
+          </div>
+          <meta-vegetables/>
+        </div>
       </div>
       <div class="flex-right">
         <div class="box-header">
@@ -88,17 +99,13 @@ export default {
       { name: '前海自贸区', value: -4.2 },
       { name: '深汕', value: 5 }
     ]
-    const lineOps = {
-      xData: ['04-01', '04-05', '04-10', '04-15', '04-20', '04-25', '04-30'],
-      seriesData: [120, 132, 101, 134, 90, 230, 210]
-    }
     const goBack = () => {
       router.back()
     }
     nextTick(() => {
       dtLoading.value = false
     })
-    return { dtLoading, increaseOps, mapOptions, lineOps,goBack }
+    return { dtLoading, increaseOps, mapOptions, goBack }
   }
 }
 </script>

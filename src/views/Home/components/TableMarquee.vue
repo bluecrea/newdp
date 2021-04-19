@@ -35,6 +35,7 @@
 </template>
 <script>
 import { onMounted, onUnmounted, ref } from 'vue'
+import { getDeviceInfo } from '@/utils/api'
 
 export default {
   name: 'tableMarquee',
@@ -48,23 +49,21 @@ export default {
     })
     onUnmounted(() => clearInterval(timer))
     const getData = () => {
-      listData.value = [
-        { time: '20:21:21', name: '横岗第一市场', no: 'A30', goodsName: '海南花罗', price: '2.40', weight: '0.5' },
-        { time: '10:20:20', name: '横岗第二市场', no: 'A31', goodsName: '广东花罗', price: '2.50', weight: '0.6' },
-        { time: '10:21:30', name: '横岗第三市场', no: 'A31', goodsName: '广东花罗', price: '2.60', weight: '0.7' },
-        { time: '10:22:40', name: '横岗第四市场', no: 'A31', goodsName: '广东花罗', price: '2.70', weight: '0.8' },
-        { time: '10:23:50', name: '横岗第五市场', no: 'A31', goodsName: '广东花罗', price: '2.80', weight: '0.9' },
-        { time: '10:24:00', name: '横岗第六市场', no: 'A31', goodsName: '广东花罗', price: '2.90', weight: '1.0' },
-        { time: '10:24:00', name: '横岗第七市场', no: 'A31', goodsName: '广东花罗', price: '2.90', weight: '1.0' }
-      ]
+      getDeviceInfo({}).then(res => {
+        if (res.result.success) {
+          listData.value = res.data
+        }
+      })
     }
     const scrollAnimate = () => {
-      animateUp.value = true
-      setTimeout(() => {
-        listData.value.push(listData.value[0])
-        listData.value.shift()
-        animateUp.value = false
-      }, 500)
+      if (listData.value.length > 5) {
+        animateUp.value = true
+        setTimeout(() => {
+          listData.value.push(listData.value[0])
+          listData.value.shift()
+          animateUp.value = false
+        }, 500)
+      }
     }
     return { listData, animateUp }
   }

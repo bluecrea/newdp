@@ -8,13 +8,23 @@
 <script>
 import { nextTick, ref } from 'vue'
 import echarts from 'echarts'
-import {pieOption} from './option'
+import { pieOption } from './option'
 
 export default {
   name: 'PieChart',
-  setup() {
+  props: {
+    pieOpsData: {
+      type: Array
+    },
+    total: {
+      type: Number
+    }
+  },
+  setup(props) {
     const pieScales = ref(null)
+    pieOption.title.text = `{name|秤总数}\n{val|${props.total}台}`
     nextTick(() => {
+      pieOption.series[0].data = props.pieOpsData
       let chart = echarts.init(pieScales.value)
       chart.setOption(pieOption)
       window.addEventListener('resize', () => {
