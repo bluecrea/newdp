@@ -56,21 +56,21 @@
               <img src="../../assets/images/measure/list_1.png" alt="">
               <p>
                 <span>接入秤数</span>
-                <span><i>{{ marketObj.info.deviceTotal }}</i> 台</span>
+                <span><i>{{ deviceData.deviceTotal || 0 }}</i> 台</span>
               </p>
             </li>
             <li>
               <img src="../../assets/images/measure/list_2.png" alt="">
               <p>
                 <span>在线数</span>
-                <span><i>{{ marketObj.info.onlineDeviceTotal }}</i> 台</span>
+                <span><i>{{ deviceData.onlineDeviceTotal || 0 }}</i> 台</span>
               </p>
             </li>
             <li>
               <img src="../../assets/images/measure/list_3.png" alt="">
               <p>
                 <span>异常数</span>
-                <span><i>{{ marketObj.info.abnormalDeviceTotal }}</i> 台</span>
+                <span><i>{{ deviceData.abnormalDeviceTotal || 0 }}</i> 台</span>
               </p>
             </li>
           </ul>
@@ -166,6 +166,7 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const marketId = ref(route.query.marketId)
+    const deviceData = ref({})
     const getData = () => {
       getMarketStallList({marketId: marketId.value}).then(res => {
         if (res.result.success) {
@@ -175,7 +176,8 @@ export default {
       })
       getMarketStatisticsInfo({marketId: marketId.value}).then(res => {
         if (res.result.success) {
-          marketObj.value.info = res.data
+          deviceData.value = res.data
+          console.log(res.data)
         }
       })
     }
@@ -198,7 +200,7 @@ export default {
         return 'alarm'
       }
     }
-    return {dtLoading,goBack,marketObj,marketId,marketArr,stallStatus}
+    return {dtLoading,goBack,marketObj,marketId,marketArr,stallStatus,deviceData}
   }
 }
 </script>
