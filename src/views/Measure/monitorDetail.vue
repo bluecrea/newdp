@@ -5,17 +5,18 @@
     <div class="flex-con">
       <div class="box-left">
         <div class="box-header">
-          <div class="bar-title">
-            {{title}}
+          <div class="bar-title" style="width: 50%">
+            {{marketObj.marketName}}
           </div>
         </div>
         <div class="box-content">
           <div class="status">
             <ul class="online">
+              <li>未接入</li>
               <li>不在线</li>
+              <li>在线</li>
               <li>预警</li>
               <li>报警</li>
-              <li>在线</li>
             </ul>
             <dl class="pic">
               <dd>有图像识别</dd>
@@ -23,72 +24,22 @@
             </dl>
           </div>
           <ul class="box">
-            <li>
+            <li v-for="(item, index) in marketArr" :key="index">
               <div class="stalls-no">
-                <span class="no">A15</span>
+                <span class="no">{{ item.stallCode }}</span>
                 <span class="st">
-                  <i class="is-pic"/>
-                  <i class="stp online"/>
+                  <i class="is-pic" v-if="item.isDiscern"/>
+                  <i class="no-pic" v-if="item.isImage"/>
+                  <i class="stp" :class="stallStatus(item.stallStatus)"/>
                 </span>
               </div>
-              <h4>深圳市龙岗区岗富牛肉店</h4>
+              <h4>{{ item.businessEntity }}</h4>
               <div class="detail">
                 <div class="dl">
-                  <p>今日交易数：<em>192</em> 笔</p>
-                  <p>今日交易额：<em>649.23</em> 元</p>
+                  <p>今日交易数：<em>{{ item.tradeQty || 0 }}</em> 笔</p>
+                  <p>今日交易额：<em>{{ item.tradeAmount || 0 }}</em> 元</p>
                 </div>
-                <div class="type">类别： 肉挡</div>
-              </div>
-            </li>
-            <li>
-              <div class="stalls-no">
-                <span class="no">A15</span>
-                <span class="st">
-                  <i class="is-pic"/>
-                  <i class="stp online"/>
-                </span>
-              </div>
-              <h4>深圳市布吉吉富鸭肉店</h4>
-              <div class="detail">
-                <div class="dl">
-                  <p>今日交易数：<em>192</em> 笔</p>
-                  <p>今日交易额：<em>649.23</em> 元</p>
-                </div>
-                <div class="type">类别： 肉挡</div>
-              </div>
-            </li>
-            <li>
-              <div class="stalls-no">
-                <span class="no">A15</span>
-                <span class="st">
-                  <i class="is-pic"/>
-                  <i class="stp online"/>
-                </span>
-              </div>
-              <h4>深圳市平湖平富猪肉店</h4>
-              <div class="detail">
-                <div class="dl">
-                  <p>今日交易数：<em>192</em> 笔</p>
-                  <p>今日交易额：<em>649.23</em> 元</p>
-                </div>
-                <div class="type">类别： 肉挡</div>
-              </div>
-            </li>
-            <li>
-              <div class="stalls-no">
-                <span class="no">A15</span>
-                <span class="st">
-                  <i class="is-pic"/>
-                  <i class="stp online"/>
-                </span>
-              </div>
-              <h4>深圳市沙湾沙富狗肉店</h4>
-              <div class="detail">
-                <div class="dl">
-                  <p>今日交易数：<em>192</em> 笔</p>
-                  <p>今日交易额：<em>649.23</em> 元</p>
-                </div>
-                <div class="type">类别：肉挡</div>
+                <div class="type">类别： {{ item.stallTypeName }}</div>
               </div>
             </li>
           </ul>
@@ -105,21 +56,21 @@
               <img src="../../assets/images/measure/list_1.png" alt="">
               <p>
                 <span>接入秤数</span>
-                <span><i>123</i> 台</span>
+                <span><i>{{ marketObj.info.deviceTotal }}</i> 台</span>
               </p>
             </li>
             <li>
               <img src="../../assets/images/measure/list_2.png" alt="">
               <p>
                 <span>在线数</span>
-                <span><i>123</i> 台</span>
+                <span><i>{{ marketObj.info.onlineDeviceTotal }}</i> 台</span>
               </p>
             </li>
             <li>
               <img src="../../assets/images/measure/list_3.png" alt="">
               <p>
                 <span>异常数</span>
-                <span><i>123</i> 台</span>
+                <span><i>{{ marketObj.info.abnormalDeviceTotal }}</i> 台</span>
               </p>
             </li>
           </ul>
@@ -192,15 +143,16 @@
             </div>
           </div>
         </div>
-        <div class="box-right-bottom"></div>
+        <div class="box-right-bottom"/>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Loading from '@/components/loading'
-import {ref} from "vue";
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { getMarketStallList,getMarketStatisticsInfo } from '@/utils/api'
 
 export default {
   name: 'monitor',
@@ -209,14 +161,44 @@ export default {
   },
   setup() {
     const dtLoading = ref(false)
-    const title = ref('')
+    const marketObj = ref({})
+    const marketArr = ref([])
     const router = useRouter()
     const route = useRoute()
-    title.value = route.query.name
+    const marketId = ref(route.query.marketId)
+    const getData = () => {
+      getMarketStallList({marketId: marketId.value}).then(res => {
+        if (res.result.success) {
+          marketObj.value = res.data.market
+          marketArr.value = res.data.items
+        }
+      })
+      getMarketStatisticsInfo({marketId: marketId.value}).then(res => {
+        if (res.result.success) {
+          marketObj.value.info = res.data
+        }
+      })
+    }
+    onMounted(() => {
+      getData()
+    })
     const goBack = () => {
       router.back()
     }
-    return {dtLoading,goBack,title}
+    const stallStatus = (status) => {
+      if (status === 0) {
+        return 'no-access'
+      } else if (status === 1) {
+        return 'offline'
+      } else if (status === 2) {
+        return 'online'
+      } else if (status === 3) {
+        return 'early-warning'
+      } else if (status === 4) {
+        return 'alarm'
+      }
+    }
+    return {dtLoading,goBack,marketObj,marketId,marketArr,stallStatus}
   }
 }
 </script>

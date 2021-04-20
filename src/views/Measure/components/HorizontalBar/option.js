@@ -6,6 +6,12 @@ export const barOption = {
     top: '5%',
     containLabel: true
   },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
   xAxis: {
     type: 'value',
     axisLine: {
@@ -72,7 +78,7 @@ export const barOption = {
     barGap: '15%',
     itemStyle: {
       normal: {
-        color: '#f95252'
+        color: '#fcc500'
       }
     },
     data: []
@@ -83,7 +89,7 @@ export const barOption = {
     label: {
       normal: {
         show: true,
-        position: 'right'
+        position: 'insideLeft'
       }
     },
     barCategoryGap: '40%',
@@ -100,13 +106,13 @@ export const barOption = {
     label: {
       normal: {
         show: true,
-        position: 'right'
+        position: 'insideLeft'
       }
     },
     barCategoryGap: '40%',
     itemStyle: {
       normal: {
-        color: '#2a3400'
+        color: '#b8b8b8'
       }
     },
     data: []
@@ -117,13 +123,13 @@ export const barOption = {
     label: {
       normal: {
         show: true,
-        position: 'right'
+        position: 'insideLeft'
       }
     },
     barCategoryGap: '40%',
     itemStyle: {
       normal: {
-        color: '#0567f6'
+        color: '#ff2525'
       }
     },
     data: []

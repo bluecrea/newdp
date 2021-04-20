@@ -1,7 +1,8 @@
 <template>
   <ul class="num-roll">
-    <li class="no-date" v-for="(item,index) in orderArr" :key="index">
-      <span>
+    <li v-for="(item,index) in orderArr" :key="index">
+      <span v-if="item === 'z'" class="no-data">0</span>
+      <span v-else>
         <i :style="{ transform:`translate(-50%, -${item * 10}%)`}">0123456789</i>
       </span>
     </li>
@@ -13,7 +14,7 @@ export default {
     orderArr: {
       type: Array,
       default: () => {
-        return ['0','0','0','0','0','0','0','0','0']
+        return ['z','z','z','z','z','z','z','z','z']
       }
     }
   }

@@ -82,6 +82,7 @@ export const mapOption = {
     name: '在线',
     type: 'effectScatter',
     coordinateSystem: 'geo',
+    zlevel: 1,
     silent: true,
     rippleEffect: { //涟漪特效
       period: 5, //动画时间，值越小速度越快
@@ -92,6 +93,7 @@ export const mapOption = {
   }, {
     name: '不在线',
     type: 'scatter',
+    zlevel: 0,
     silent: true,
     coordinateSystem: 'geo',
     data: []

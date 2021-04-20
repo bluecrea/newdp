@@ -3,7 +3,7 @@ export const pieOption = {
     trigger: 'item',
     formatter: '{a} <br/>{b}: {c} ({d}%)'
   },*/
-  color: ['#66ff66','#ff0000','#2c7bf0'],
+  color: ['#66ff66','#fcc500','#2c7bf0','#b8b8b8','#ff2525'],
   title: {
     text: '',// '{name|' + title + '}\n{val|' + formatNumber(total) + '}',
     x: 'center',

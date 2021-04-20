@@ -11,7 +11,7 @@
               <img src="../../assets/images/measure/scales.jpg" alt="">
             </div>
           </div>
-          <scales-data/>
+          <scales-data :county-items="scalesParams" v-if="scalesParams.length > 0"/>
         </div>
       </div>
       <div class="main-measure-right">
@@ -20,12 +20,10 @@
         <div class="complaint">
           <div class="bar-title">投诉与处理</div>
           <ul class="flex-box">
-            <template v-for="(item,index) in complaintList" :key="index">
-              <li v-if="index < 5">
-                <h4>{{ item.complaintContents }}</h4>
-                <em>2021-04-09</em>
-              </li>
-            </template>
+            <li  v-for="(item,index) in complaintList.slice(0, 4)" :key="index" :class="{'active': item.dealStatus === 1}">
+              <h4>{{ item.complaintContents }}</h4>
+              <em>{{ item.complaintTime.slice(0, 10) }}</em>
+            </li>
           </ul>
         </div>
       </div>
@@ -57,6 +55,7 @@ export default {
     const goBack = () => {
       router.back()
     }
+    const scalesParams = ref([])
     const initMap = () => {
       let chart = echarts.init(document.getElementById('measureMap'))
       getOnMap('sz').then(res => {
@@ -66,13 +65,14 @@ export default {
         if (res.result.success) {
           res.data.marketItems.forEach(item => {
             if (item.marketStatus === 0) {
-              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 8 }
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px+3 }
               option.series[2].data.push(obj)
             } else {
-              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum/2 }
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
               option.series[1].data.push(obj)
             }
           })
+          scalesParams.value = res.data.countyItems
           chart.setOption(option)
           window.addEventListener('resize', () => {
             chart.resize();
@@ -103,7 +103,7 @@ export default {
       })
       getComplaintList({}).then(res => {
         if (res.result.success) {
-          complaintList.value = res.items
+          complaintList.value = res.data.items
         }
       })
       dtLoading.value = false
@@ -111,7 +111,7 @@ export default {
     onMounted(() => {
       initMap()
     })
-    return {dtLoading,goBack,pieOpsData,pieOpsTotal, areaArray, seriesObj, complaintList}
+    return {dtLoading,goBack,pieOpsData,pieOpsTotal, areaArray, seriesObj, complaintList,scalesParams}
   },
   components: {
     Loading,

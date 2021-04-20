@@ -66,8 +66,9 @@ import Loading from '@/components/loading'
 import JumpSinkBar from './components/JumpSinkBar'
 import CpiMap from './components/CpiMap'
 import MetaVegetables from './components/MetaVegetables'
-import { nextTick, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import {getAreaIndexStatistics,getIndexUp,getIndexDown, getGoodsIndex} from '@/utils/api'
 
 export default {
   name: 'cpi',
@@ -99,6 +100,25 @@ export default {
       { name: '前海自贸区', value: -4.2 },
       { name: '深汕', value: 5 }
     ]
+    const getData = () => {
+      getAreaIndexStatistics({}).then(res => {
+        if (res.result.success) {
+          res.data.map(item => {
+            if (item.value) {
+              mapOptions.push()
+            }
+          })
+        }
+      })
+      getIndexUp({}).then()
+      getIndexDown({}).then()
+      getGoodsIndex({}).then(res => {
+        console.log(res)
+      })
+    }
+    onMounted(() => {
+      getData()
+    })
     const goBack = () => {
       router.back()
     }

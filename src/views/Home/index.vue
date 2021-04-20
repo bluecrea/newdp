@@ -77,10 +77,10 @@ export default {
           accessArr.value[2].data = res.data.onlineDeviceTotal
           res.data.marketItems.forEach(item => {
             if (item.marketStatus === 0) {
-              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum + 8 }
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px+3 }
               mapOption.series[2].data.push(obj)
             } else {
-              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.deviceNum/2 }
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
               mapOption.series[1].data.push(obj)
             }
           })
@@ -99,26 +99,27 @@ export default {
           })
         }
       })
-      getStallStatisticsInfo({}).then(res => {
-        if (res.result.success) {
-          console.log(res.data)
-        }
-      })
-      let num = 2568782
-      numberArr.value = setNumberTransform(num)
       setInterval(() => {
-        num ++
-        numberArr.value = setNumberTransform(num)
-      }, 5000)
-
-      toDayArr.value = setNumberTransform(32341)
+        getStallStatisticsInfo({}).then(res => {
+          if (res.result.success) {
+            numberArr.value = setNumberTransform(parseInt(res.data.tradeAmount))
+            toDayArr.value = setNumberTransform(parseInt(res.data.tradeQty))
+          }
+        })
+      }, 30000)
     }
+    getStallStatisticsInfo({}).then(res => {
+      if (res.result.success) {
+        numberArr.value = setNumberTransform(parseInt(res.data.tradeAmount))
+        toDayArr.value = setNumberTransform(parseInt(res.data.tradeQty))
+      }
+    })
     const setNumberTransform = (num) => {
       num = `${num}`.split('')
       if (num.length < 9) {
         let arrLength = num.length
         for (let i = 0; i < (9 - arrLength); i++) {
-          num.unshift('0')
+          num.unshift('z')
         }
       }
       return num
