@@ -14,6 +14,12 @@ export default {
     }
   },
   setup(props) {
+    const maxNum = Math.max.apply(Math, props.mapOps.map(item => {
+      return item.value
+    }))
+    const minNum = Math.min.apply(Math, props.mapOps.map(item => {
+      return item.value
+    }))
     const mapOps = {
       geo: {
         map: 'shenzhen',
@@ -40,8 +46,8 @@ export default {
         showLabel: true,
         left: 'center',
         bottom: 30,
-        min: -8,
-        max: 5,
+        min: minNum,
+        max: maxNum,
         inRange: {
           color: ['#19e74a','#fc0301']
         }
@@ -60,11 +66,13 @@ export default {
         label: {
           normal: {
             show: true,
-            formatter: params => {
-              if (params.data.value > 0) {
-                return  '{name|'+ params.data.name +'}\n{jump|+'+ params.data.value +'%}'
-              } else {
-                return '{name|'+ params.data.name +'}\n{sink|'+ params.data.value +'%}'
+            formatter: (params) => {
+              if (params.data) {
+                if (params.data.value > 0) {
+                  return  '{name|'+ params.data.name +'}\n{jump|+'+ params.data.value +'%}'
+                } else {
+                  return '{name|'+ params.data.name +'}\n{sink|'+ params.data.value +'%}'
+                }
               }
             },
             rich: {

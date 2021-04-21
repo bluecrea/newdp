@@ -9,14 +9,14 @@
         </div>
         <div class="box-cen">
           <h5>涨幅——深圳市</h5>
-          <jump-sink-bar :options="increaseOps" types="increase"/>
+          <jump-sink-bar :options="increaseOps" v-if="increaseOps.goodsName.length > 0" types="increase"/>
           <h5>跌幅——深圳市</h5>
-          <jump-sink-bar :options="increaseOps" types="decline"/>
+          <down-sink-bar :options="declineOps" v-if="declineOps.goodsName.length > 0" types="decline"/>
         </div>
         <div class="box-bottom"/>
       </div>
       <div class="flex-center">
-        <cpi-map :map-ops="mapOptions"/>
+        <cpi-map :map-ops="mapOptions" v-if="mapOptions.length>0"/>
         <div class="cpi-bot">
           <div class="legend">
             <div class="c-title">肉菜价格指数</div>
@@ -35,25 +35,11 @@
           <h4>交易信息展示</h4>
         </div>
         <ul class="box-cen">
-          <li>
-            <span>豆角</span>
-            <span class="increase">+26.05%</span>
-            <span>5.43元/公斤</span>
-          </li>
-          <li>
-            <span>豆角</span>
-            <span class="increase">+26.05%</span>
-            <span>5.43元/公斤</span>
-          </li>
-          <li>
-            <span>豆角</span>
-            <span class="decline">-26.05%</span>
-            <span>5.43元/公斤</span>
-          </li>
-          <li>
-            <span>豆角</span>
-            <span class="decline">-26.05%</span>
-            <span>5.43元/公斤</span>
+          <li v-for="(item, index) in goodsIndexArr.slice(0,14)" :key="index">
+            <span>{{ item.goodsName }}</span>
+            <span v-if="Math.sign(item.dailyFluctuation) === 1" class="increase">+{{ item.dailyFluctuationStr }}</span>
+            <span v-else class="decline">-{{ item.dailyFluctuationStr }}</span>
+            <span>{{ item.dailyFluctuation }}</span>
           </li>
         </ul>
         <div class="box-bottom"/>
@@ -64,11 +50,12 @@
 <script>
 import Loading from '@/components/loading'
 import JumpSinkBar from './components/JumpSinkBar'
+import DownSinkBar from './components/DownSinkBar'
 import CpiMap from './components/CpiMap'
 import MetaVegetables from './components/MetaVegetables'
 import { nextTick, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {getAreaIndexStatistics,getIndexUp,getIndexDown, getGoodsIndex} from '@/utils/api'
+import {getAreaIndexStatistics,getIndexUp, getGoodsIndex} from '@/utils/api'
 
 export default {
   name: 'cpi',
@@ -76,44 +63,54 @@ export default {
     Loading,
     JumpSinkBar,
     CpiMap,
-    MetaVegetables
+    MetaVegetables,
+    DownSinkBar
   },
   setup() {
     const dtLoading = ref(true)
     const router = useRouter()
     const increaseOps = {
-      goodsName: ["安徽省","河南省","浙江省","湖北省","贵州省","江西省","江苏省","四川省"],
-      goodsValue: [239,181,154,144,135,117,74,72,],
-      goodsMax: [500, 500,500,500,500,500,500,500]
+      goodsName: [],
+      goodsValue: [],
+      goodsMax: []
     }
-    const mapOptions = [
-      { name: '罗湖区', value: 3.5},
-      { name: '福田区', value: 2.8 },
-      { name: '南山区', value: 4.2 },
-      { name: '宝安区', value: -0.5 },
-      { name: '龙岗区', value: -0.9 },
-      { name: '盐田区', value: -6.7 },
-      { name: '龙华区', value: -2.8 },
-      { name: '坪山区', value: -7.2 },
-      { name: '光明新区', value: -2.5 },
-      { name: '大鹏新区', value: -5.1 },
-      { name: '前海自贸区', value: -4.2 },
-      { name: '深汕', value: 5 }
-    ]
+    const declineOps = {
+      goodsName: [],
+      goodsValue: [],
+      goodsMax: []
+    }
+    const goodsIndexArr = ref([])
+    const mapOptions = []
     const getData = () => {
       getAreaIndexStatistics({}).then(res => {
         if (res.result.success) {
           res.data.map(item => {
-            if (item.value) {
-              mapOptions.push()
-            }
+            let obj = {name:item.name,value: item.dailyFluctuation}
+            mapOptions.push(obj)
           })
         }
       })
-      getIndexUp({}).then()
-      getIndexDown({}).then()
+      getIndexUp({}).then(res => {
+        if (res.result.success) {
+          const maxNum = Math.max.apply(Math, res.data.items.mapOps.map(item => {
+            return item.dailyFluctuation
+          }))
+          res.data.items.forEach(item => {
+            increaseOps.goodsName.push(item.goodsName)
+            increaseOps.goodsValue.push(item.dailyFluctuation)
+            increaseOps.goodsMax.push(maxNum)
+          })
+          res.data.newItems.forEach(item => {
+            declineOps.goodsName.push(item.goodsName)
+            declineOps.goodsValue.push(item.dailyFluctuation)
+            declineOps.goodsMax.push(maxNum)
+          })
+        }
+      })
       getGoodsIndex({}).then(res => {
-        console.log(res)
+        if (res.result.success) {
+          goodsIndexArr.value = res.data.items
+        }
       })
     }
     onMounted(() => {
@@ -125,7 +122,7 @@ export default {
     nextTick(() => {
       dtLoading.value = false
     })
-    return { dtLoading, increaseOps, mapOptions, goBack }
+    return { dtLoading, increaseOps, mapOptions, goBack, goodsIndexArr, declineOps }
   }
 }
 </script>

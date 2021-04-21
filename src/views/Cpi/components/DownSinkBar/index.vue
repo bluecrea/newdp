@@ -6,7 +6,7 @@ import { nextTick, ref } from 'vue'
 import echarts from 'echarts'
 
 export default {
-  name: 'JumpSinkBar',
+  name: 'DownSinkBar',
   props: {
     options: {
       type: Object
