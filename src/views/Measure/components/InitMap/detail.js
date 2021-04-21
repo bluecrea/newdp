@@ -60,7 +60,7 @@ export const detailOption = {
     itemSymbol: 'circle', // 无效，需单独设置每个pieces对象
     top: 0,
     right: 0,
-    left: 'center',
+    left: '5%',
     orient: 'horizontal',
     visibility: 'off'
   },

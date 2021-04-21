@@ -3,7 +3,7 @@ export const option = {
     map: 'shenzhen',
     left: '5%',
     right: '18%',
-    top: 0,
+    top: '10%',
     bottom: '10px',
     silent: true,
     itemStyle:{
@@ -56,7 +56,7 @@ export const option = {
     itemSymbol: 'circle', // 无效，需单独设置每个pieces对象
     top: 0,
     right: 0,
-    left: 'center',
+    left: '5%',
     orient: 'horizontal',
     visibility: 'off'
   },
@@ -65,7 +65,7 @@ export const option = {
     map: 'shenzhen',
     left: '5%',
     right: '18%',
-    top: 0,
+    top: '10%',
     bottom: '10px',
     silent: false,
     itemStyle: {

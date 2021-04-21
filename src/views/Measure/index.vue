@@ -4,6 +4,7 @@
     <div class="go-back" @click="goBack"/>
     <div class="flex-con">
       <div class="main-left">
+        <div class="map-txt"/>
         <div class="map" id="measureMap"/>
         <div class="chart-bar">
           <div class="img-left">
