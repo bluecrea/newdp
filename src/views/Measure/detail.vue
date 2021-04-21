@@ -11,7 +11,7 @@
               <img src="../../assets/images/measure/scales.jpg" alt="">
             </div>
           </div>
-          <scales-data :county-items="scalesParams" v-if="scalesParams.length > 0"/>
+          <scales-data :county-items="scalesParams" v-if="sonRefresh"/>
         </div>
       </div>
       <div class="main-measure-right">
@@ -57,20 +57,32 @@ export default {
     const seriesObj = ref([])
     const complaintList = ref([])
     const scalesParams = ref([])
+    const sonRefresh = ref(false)
     const goBack = () => {
       router.back()
     }
     const initData = () => {
       let data = {
-        countyCode: ''
+        countyCode: '',
+        mapId: ''
       }
       detailOption.geo.map = route.query.name
       cityMap.forEach(item => {
         if (detailOption.geo.map === item.area) {
-          data.countyCode = item.id
+          if (detailOption.geo.map.indexOf('大鹏') !== -1) {
+            data.countyCode = '440311'
+            data.mapId = item.id
+          } else if (detailOption.geo.map.indexOf('光明') !== -1) {
+            data.countyCode = '440309'
+            data.mapId = item.id
+          } else {
+            data.countyCode = item.id
+            data.mapId = item.id
+          }
         }
       })
       getAreaMarketInfo(data).then(res => {
+        scalesParams.value = []
         if (res.result.success) {
           scalesParams.value = res.data.countyItems
           res.data.marketItems.map(item => {
@@ -118,7 +130,8 @@ export default {
             }
           })
           nextTick(() => {
-            getOnMap(data.countyCode).then(res => {
+            sonRefresh.value = true
+            getOnMap(data.mapId).then(res => {
               let chart = echarts.init(document.getElementById('measureMap'))
               echarts.registerMap(route.query.name, res.data)
               chart.setOption(detailOption)
@@ -155,7 +168,7 @@ export default {
     onMounted(() => {
       initData()
     })
-    return {dtLoading, goBack, areaName, pieOpsData, pieOpsTotal, areaArray, seriesObj, complaintList,scalesParams}
+    return {dtLoading, goBack, areaName, pieOpsData, pieOpsTotal, areaArray, seriesObj, complaintList,scalesParams, sonRefresh}
   },
   components: {
     Loading,

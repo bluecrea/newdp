@@ -66,10 +66,19 @@ export default {
           res.data.marketItems.forEach(item => {
             if (item.marketStatus === 0) {
               let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px+3 }
+              option.series[1].data.push(obj)
+            } else if (item.marketStatus === 1 ) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px+3 }
               option.series[2].data.push(obj)
+            } else if (item.marketStatus === 2) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
+              option.series[3].data.push(obj)
+            } else if (item.marketStatus === 3 ) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
+              option.series[4].data.push(obj)
             } else {
               let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
-              option.series[1].data.push(obj)
+              option.series[5].data.push(obj)
             }
           })
           scalesParams.value = res.data.countyItems

@@ -52,8 +52,7 @@ export const detailOption = {
         label: '报警',
         symbol: 'circle',
         color: '#fc0000'
-      },
-    ],
+      }],
     color: '#fff',
     textStyle: {
       color: '#fff',

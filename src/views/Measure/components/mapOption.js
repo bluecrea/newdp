@@ -19,34 +19,36 @@ export const option = {
   visualMap: {
     type: 'piecewise',
     pieces: [{
+      min: 0,
+      max: 0,
+      label: '未接入',
+      symbol: 'circle',
+      color: '#9a9a9a'
+    },{
+      min: 1,
+      max: 1,
+      label: '不在线',
+      symbol: 'circle',
+      color: '#fff'
+    },{
       max: 2,
       min: 2,
       label: '在线',
       color: '#00ff33',
       symbol: 'circle'
-    },
-      {
-        min: 3,
-        max: 3,
-        label: '预警',
-        symbol: 'circle',
-        color: '#f0953d'
-      },
-      {
-        min: 1,
-        max: 1,
-        label: '不在线',
-        symbol: 'circle',
-        color: '#fff'
-      },
-      {
-        min: 0,
-        max: 0,
-        label: '未接入',
-        symbol: 'circle',
-        color: '#c23c33'
-      }
-    ],
+    },{
+      min: 3,
+      max: 3,
+      label: '预警',
+      symbol: 'circle',
+      color: '#ffd600'
+    },{
+      min: 4,
+      max: 4,
+      label: '报警',
+      symbol: 'circle',
+      color: '#fc0000'
+    }],
     color: '#fff',
     textStyle: {
       color: '#fff',
@@ -79,6 +81,18 @@ export const option = {
       fontSize: 14,
     }
   },{
+    name: '未接入',
+    type: 'scatter',
+    silent: true,
+    coordinateSystem: 'geo',
+    data: []
+  },{
+    name: '不在线',
+    type: 'scatter',
+    silent: true,
+    coordinateSystem: 'geo',
+    data: []
+  },{
     name: '在线',
     type: 'effectScatter',
     coordinateSystem: 'geo',
@@ -89,8 +103,14 @@ export const option = {
       scale: 3 //波纹圆环最大限制，值越大波纹越大
     },
     data: [],
-  }, {
-    name: '不在线',
+  },{
+    name: '预警',
+    type: 'scatter',
+    silent: true,
+    coordinateSystem: 'geo',
+    data: []
+  },{
+    name: '报警',
     type: 'scatter',
     silent: true,
     coordinateSystem: 'geo',

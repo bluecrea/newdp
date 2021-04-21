@@ -2,7 +2,7 @@
   <div class="bar-line" ref="scalesData"/>
 </template>
 <script>
-import { nextTick, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import echarts from 'echarts'
 import {scalesOption} from "./option.js"
 
@@ -15,15 +15,18 @@ export default {
   },
   setup(props) {
     const scalesData = ref(null)
-    props.countyItems.forEach(item => {
-      scalesOption.xAxis[0].data.push(item.name)
-      scalesOption.series[0].data.push(item.marketTotal)
-      scalesOption.series[1].data.push(item.deviceWar)
-      scalesOption.series[2].data.push(item.deviceTotal)
-    })
-    nextTick(() => {
+    const showBar = ref(false)
+    const initData = () => {
       let chart = echarts.init(scalesData.value)
-      chart.setOption(scalesOption)
+      props.countyItems.forEach(item => {
+        scalesOption.xAxis[0].data.push(item.name)
+        scalesOption.series[0].data.push(item.marketTotal)
+        scalesOption.series[1].data.push(item.deviceWar)
+        scalesOption.series[2].data.push(item.deviceTotal)
+      })
+      nextTick(() => {
+        chart.setOption(scalesOption, true)
+      })
       let index = 0
       setInterval(() => {
         chart.dispatchAction({
@@ -39,8 +42,15 @@ export default {
       window.addEventListener('resize', () => {
         chart.resize();
       })
+    }
+    onMounted(() => {
+      scalesOption.xAxis[0].data = []
+      scalesOption.series[0].data = []
+      scalesOption.series[1].data = []
+      scalesOption.series[2].data = []
+      initData()
     })
-    return {scalesData}
+    return {scalesData, showBar}
   }
 }
 </script>
