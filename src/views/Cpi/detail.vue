@@ -16,7 +16,7 @@
         <div class="box-bottom"/>
       </div>
       <div class="flex-center">
-        <cpi-map :map-ops="mapOptions" v-if="mapOptions.length>0"/>
+        <detail-map :map-ops="mapOptions" :map-name="countyCode" v-if="mapOptions.length>0"/>
         <div class="cpi-bot">
           <div class="legend">
             <div class="c-title">肉菜价格指数</div>
@@ -39,7 +39,7 @@
             <span>{{ item.goodsName }}</span>
             <span v-if="Math.sign(item.dailyFluctuation) === 1" class="increase">+{{ item.dailyFluctuationStr }}</span>
             <span v-else class="decline">-{{ item.dailyFluctuationStr }}</span>
-            <span>{{ item.price }}元/kg</span>
+            <span>{{ item.dailyFluctuation }}</span>
           </li>
         </ul>
         <div class="box-bottom"/>
@@ -51,24 +51,38 @@
 import Loading from '@/components/loading'
 import JumpSinkBar from './components/JumpSinkBar'
 import DownSinkBar from './components/DownSinkBar'
-import CpiMap from './components/CpiMap'
 import MetaVegetables from './components/MetaVegetables'
 import { nextTick, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {getAreaIndexStatistics,getIndexUp, getGoodsIndex} from '@/utils/api'
+import { cityMap } from '@/views/Measure/components/InitMap'
+import DetailMap from '@/views/Cpi/components/DetailMap'
 
 export default {
   name: 'cpi',
   components: {
+    DetailMap,
     Loading,
     JumpSinkBar,
-    CpiMap,
     MetaVegetables,
     DownSinkBar
   },
   setup() {
     const dtLoading = ref(true)
     const router = useRouter()
+    const route = useRoute()
+    const countyCode = ref('')
+    cityMap.forEach(item => {
+      if (route.query.name === item.area) {
+        if (route.query.name.indexOf('大鹏') !== -1) {
+          countyCode.value =  '440311'
+        } else if (route.query.name.indexOf('光明') !== -1) {
+          countyCode.value =  '440309'
+        } else {
+          countyCode.value = item.id
+        }
+      }
+    })
     const increaseOps = {
       goodsName: [],
       goodsValue: [],
@@ -92,7 +106,7 @@ export default {
       })
       getIndexUp({}).then(res => {
         if (res.result.success) {
-          const maxNum = Math.max.apply(Math, res.data.items.map(item => {
+          const maxNum = Math.max.apply(Math, res.data.items.mapOps.map(item => {
             return item.dailyFluctuation
           }))
           res.data.items.forEach(item => {
@@ -122,7 +136,7 @@ export default {
     nextTick(() => {
       dtLoading.value = false
     })
-    return { dtLoading, increaseOps, mapOptions, goBack, goodsIndexArr, declineOps }
+    return { dtLoading, increaseOps, mapOptions, goBack, goodsIndexArr, declineOps,countyCode }
   }
 }
 </script>

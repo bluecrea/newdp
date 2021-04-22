@@ -137,7 +137,7 @@ export default {
               echarts.registerMap(route.query.name, res.data)
               chart.setOption(detailOption)
               chart.on('click',(routeQuery) => {
-                router.push({path: '/monitor', query: {marketId: routeQuery.data.marketId }})
+                router.push({path: '/monitor', query: {marketId: routeQuery.data.marketId, code: data.countyCode}})
               })
             })
           })

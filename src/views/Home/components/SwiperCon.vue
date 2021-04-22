@@ -1,8 +1,8 @@
 <template>
-  <div class="swiper-container swiper" v-if="imgLength.length>0">
+  <div class="swiper-container swiper">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(item, index) in imgLength" :key="index">
-        <img src="https://goss.cfp.cn/creative/vcg/800/new/VCG41N728851723.jpg" alt="">
+        <img :src="item.showImage" alt="">
       </div>
     </div>
   </div>

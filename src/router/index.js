@@ -28,14 +28,26 @@ const routes = [
   {
     path: '/monitor',
     name: 'monitor',
-    component: () => import('@/views/Measure/monitorDetail'),
+    component: () => import('@/views/Measure/monitor'),
     meta: { title: '市场详情' }
+  },
+  {
+    path: '/monitorDetail',
+    name: 'monitorDetail',
+    component: () => import('@/views/Measure/monitorDetail'),
+    meta: { title: '档位统计' }
   },
   {
     path: '/cpi',
     name: 'cpi',
     component: () => import('@/views/Cpi'),
     meta: { title: '指数' }
+  },
+  {
+    path: '/cpiDetail',
+    name: 'cpiDetail',
+    component: () => import('@/views/Cpi/detail'),
+    meta: { title: '区指数详情' }
   },
   {
     path: '/traceability',

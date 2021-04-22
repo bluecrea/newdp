@@ -3,67 +3,37 @@
 </template>
 <script>
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { getOnMap } from '@/utils/api'
 import echarts from 'echarts'
 
 export default {
-  name: 'CpiMap',
+  name: 'DetailMap',
   props: {
     mapOps: {
       type: Array
+    },
+    mapName: {
+      type: String
     }
   },
   setup(props) {
-    const maxNum = Math.max.apply(Math, props.mapOps.map(item => {
-      return item.value
-    }))
-    const minNum = Math.min.apply(Math, props.mapOps.map(item => {
-      return item.value
-    }))
     const mapOps = {
-      geo: {
-        map: 'shenzhen',
-        // silent: true,
+      series: [{
+        type: 'map',
+        map: props.mapName,
+        data: props.mapOps,
+        selectedMode: false,
+        layoutSize: 580,
         itemStyle:{
           normal: {
             areaColor: '#277b97',
-            shadowColor: '#6c4d03',
+            shadowColor: '#075289',
             shadowBlur: 5,
             shadowOffsetX: 0,
             shadowOffsetY: 10,
-          }
-        }
-      },
-      visualMap: {
-        type: 'continuous',
-        orient: 'horizontal',
-        itemHeight: 100,
-        text: ['涨','跌'],
-        textStyle: {
-          color: '#fff',
-          fontSize: 15,
+          },
         },
-        showLabel: true,
-        left: 'center',
-        bottom: 30,
-        min: minNum,
-        max: maxNum,
-        inRange: {
-          color: ['#19e74a','#fc0301']
-        }
-      },
-      series: [{
-        type: 'map',
-        map: 'shenzhen',
-        data: props.mapOps,
-        selectedMode: false,
-        itemStyle: {
-          normal: {
-            borderColor: '#fccba5',
-            borderWidth: 2,
-          }
-        },
+        silent: true,
         label: {
           normal: {
             show: true,
@@ -94,17 +64,13 @@ export default {
         }
       }]
     }
-    const router = useRouter()
     const initMap = () => {
-      getOnMap('sz').then(res => {
+      getOnMap(props.mapName).then(res => {
         let chart = echarts.init(document.getElementById('cpiMap'))
-        echarts.registerMap('shenzhen',res.data)
+        echarts.registerMap(props.mapName,res.data)
         chart.setOption(mapOps)
         window.addEventListener('resize', () => {
           chart.resize();
-        })
-        chart.on('click',(data) => {
-          router.push({path: '/cpiDetail', query: {name: data.name}})
         })
       })
     }

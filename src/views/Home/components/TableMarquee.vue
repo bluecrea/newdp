@@ -12,9 +12,9 @@
       <div class="marquee-wrap">
         <ul class="marquee-list" :class="{ 'animate-up': animateUp }">
           <li v-for="(item,index) in listData" :key="index">
-            <span>{{ item.time }}</span>
-            <span>{{ item.name }}</span>
-            <span>{{ item.no }}</span>
+            <span>{{ item.orderTime }}</span>
+            <span :title="item.marketName">{{ item.marketName }}</span>
+            <span>{{ item.stallCode }}</span>
             <span>{{ item.goodsName }}</span>
             <span>{{ item.price }}</span>
             <span>{{ item.weight }}</span>

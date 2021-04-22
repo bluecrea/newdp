@@ -1,5 +1,6 @@
 <template>
   <div class="flex-con">
+    <Loading v-if="dtLoading"/>
     <div class="main-left">
       <div class="map" id="map"/>
       <div class="table-box">
@@ -7,7 +8,7 @@
           <div class="title">{{ realObj.marketName }}</div>
           <div class="img-con">
             <div class="img">
-              <swiper-con @realIndex="realIndex" :img-length="realArr"/>
+              <swiper-con @realIndex="realIndex" :img-length="realArr" v-if="realArr.length>0"/>
             </div>
             <ul class="list" v-if="realIndex">
               <li>挡位数 <span>{{ realObj.stallNum }}</span> 个</li>
@@ -44,7 +45,8 @@
 
 <script>
 import { onMounted, ref } from 'vue'
-import { getOnMap, getAreaMarketInfo, getMarketStatistics, getStallStatisticsInfo } from '@/utils/api'
+import { getOnMap, getAreaMarketInfo, getMarketStatistics } from '@/utils/api'
+import Loading from '@/components/loading'
 import { mapOption } from "./components/map"
 import dataMonitor from './components/DataMonitor'
 import tableMarquee from './components/TableMarquee'
@@ -65,6 +67,7 @@ export default {
     ])
     const realObj = ref({})
     const realArr = ref([])
+    const dtLoading = ref(true)
     const initMap = () => {
       let chart = echarts.init(document.getElementById('map'))
       getOnMap('sz').then(res => {
@@ -84,7 +87,8 @@ export default {
               mapOption.series[1].data.push(obj)
             }
           })
-
+          numberArr.value = setNumberTransform(parseInt(res.data.tradeAmount))
+          toDayArr.value = setNumberTransform(parseInt(res.data.tradeQty))
           chart.setOption(mapOption)
           window.addEventListener('resize', () => {
             chart.resize();
@@ -100,20 +104,10 @@ export default {
         }
       })
       setInterval(() => {
-        getStallStatisticsInfo({}).then(res => {
-          if (res.result.success) {
-            numberArr.value = setNumberTransform(parseInt(res.data.tradeAmount))
-            toDayArr.value = setNumberTransform(parseInt(res.data.tradeQty))
-          }
-        })
+        initMap()
       }, 30000)
+      dtLoading.value = false
     }
-    getStallStatisticsInfo({}).then(res => {
-      if (res.result.success) {
-        numberArr.value = setNumberTransform(parseInt(res.data.tradeAmount))
-        toDayArr.value = setNumberTransform(parseInt(res.data.tradeQty))
-      }
-    })
     const setNumberTransform = (num) => {
       num = `${num}`.split('')
       if (num.length < 9) {
@@ -131,7 +125,7 @@ export default {
     onMounted(() => {
       initMap()
     })
-    return { numberArr, accessArr, toDayArr, realIndex, realArr, realObj }
+    return { numberArr, accessArr, toDayArr, realIndex, realArr, realObj,dtLoading }
   },
   components: {
     dataMonitor,
@@ -139,6 +133,7 @@ export default {
     SwiperCon,
     tableMarquee,
     MetaVegetables,
+    Loading,
   }
 }
 </script>
