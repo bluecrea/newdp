@@ -17,7 +17,31 @@ export default {
     }
   },
   setup(props) {
+    const maxNum = Math.max.apply(Math, props.mapOps.map(item => {
+      return item.value
+    }))
+    const minNum = Math.min.apply(Math, props.mapOps.map(item => {
+      return item.value
+    }))
     const mapOps = {
+      visualMap: {
+        type: 'continuous',
+        orient: 'horizontal',
+        itemHeight: 100,
+        text: ['涨','跌'],
+        textStyle: {
+          color: '#fff',
+          fontSize: 15,
+        },
+        showLabel: true,
+        left: 'center',
+        bottom: 10,
+        min: minNum,
+        max: maxNum,
+        inRange: {
+          color: ['#19e74a','#fc0301']
+        }
+      },
       series: [{
         type: 'map',
         map: props.mapName,

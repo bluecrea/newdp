@@ -19,32 +19,39 @@ export const mapOption = {
   visualMap: {
     type: 'piecewise',
     pieces: [{
-      max: 2,
-      min: 2,
+      max: 0,
+      min: 0,
       label: '在线',
       color: '#00ff33',
       symbol: 'circle'
     },
       {
-        min: 3,
-        max: 3,
+        min: 1,
+        max: 1,
         label: '预警',
         symbol: 'circle',
         color: '#f0953d'
       },
       {
-        min: 1,
-        max: 1,
+        min: 2,
+        max: 2,
+        label: '报警',
+        symbol: 'circle',
+        color: '#ea3323'
+      },
+      {
+        min: 3,
+        max: 3,
         label: '不在线',
         symbol: 'circle',
         color: '#fff'
       },
       {
-        min: 0,
-        max: 0,
+        min: 4,
+        max: 4,
         label: '未接入',
         symbol: 'circle',
-        color: '#c23c33'
+        color: '#8eced6'
       }
     ],
     color: '#fff',
@@ -90,8 +97,29 @@ export const mapOption = {
       scale: 2 //波纹圆环最大限制，值越大波纹越大
     },
     data: [],
-  }, {
+  },{
+    name: '预警',
+    type: 'scatter',
+    zlevel: 0,
+    silent: true,
+    coordinateSystem: 'geo',
+    data: []
+  },{
+    name: '报警',
+    type: 'scatter',
+    zlevel: 0,
+    silent: true,
+    coordinateSystem: 'geo',
+    data: []
+  },{
     name: '不在线',
+    type: 'scatter',
+    zlevel: 0,
+    silent: true,
+    coordinateSystem: 'geo',
+    data: []
+  },{
+    name: '未接入',
     type: 'scatter',
     zlevel: 0,
     silent: true,

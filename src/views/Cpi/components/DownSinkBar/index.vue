@@ -60,7 +60,7 @@ export default {
             fontSize: '12'
           },
         },
-        data: props.options.goodsValue.slice(0,10)
+        data: props.options.goodsPrice.slice(0,10)
       }],
       series: [{
         name: '值',

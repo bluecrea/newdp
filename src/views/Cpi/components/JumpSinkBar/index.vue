@@ -27,7 +27,7 @@ export default {
       },
       xAxis: {
         show: false,
-        type: 'value'
+        type: 'value',
       },
       yAxis: [{
         type: 'category',
@@ -60,7 +60,7 @@ export default {
             fontSize: '12'
           },
         },
-        data: props.options.goodsValue.slice(0,10)
+        data: props.options.goodsPrice.slice(0,10)
       }],
       series: [{
         name: '值',
@@ -72,7 +72,7 @@ export default {
           },
         },
         barWidth: 20,
-        data: props.options.goodsValue
+        data: props.options.goodsValue,
       },{
         name: '背景',
         type: 'bar',

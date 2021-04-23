@@ -59,6 +59,7 @@ export const barOption = {
       }
     },
     barGap: '15%',
+    barWidth: 20,
     itemStyle: {
       normal: {
         color: '#00c800'

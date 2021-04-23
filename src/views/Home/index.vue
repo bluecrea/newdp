@@ -36,6 +36,12 @@
         </div>
         <div class="title">肉菜价格指数</div>
         <div class="line-box">
+          <ul class="stat">
+            <li>最高</li>
+            <li>最低</li>
+            <li>今天</li>
+            <li>物价指数</li>
+          </ul>
           <meta-vegetables/>
         </div>
       </div>
@@ -80,11 +86,20 @@ export default {
           accessArr.value[2].data = res.data.onlineDeviceTotal
           res.data.marketItems.forEach(item => {
             if (item.marketStatus === 0) {
-              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px+3 }
-              mapOption.series[2].data.push(obj)
-            } else {
               let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
               mapOption.series[1].data.push(obj)
+            } else if (item.marketStatus === 1) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
+              mapOption.series[2].data.push(obj)
+            } else if (item.marketStatus === 2) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
+              mapOption.series[3].data.push(obj)
+            }else if (item.marketStatus === 3) {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
+              mapOption.series[4].data.push(obj)
+            } else {
+              let obj = { name: item.name, value:[item.longitude, item.latitude, item.marketStatus], symbolSize: item.px }
+              mapOption.series[5].data.push(obj)
             }
           })
           numberArr.value = setNumberTransform(parseInt(res.data.tradeAmount))
@@ -98,14 +113,18 @@ export default {
       getMarketStatistics({}).then(res => {
         if (res.result.success) {
           res.data.forEach(item => {
-            let obj = {marketName: item.market.marketName, stallNum: item.stallNum, deviceNum: item.deviceNum, tradeQty: item.tradeQty, abnormalDeviceNum: item.abnormalDeviceNum}
+            let obj = {
+              marketName: item.market.marketName,
+              stallNum: item.stallNum,
+              deviceNum: item.deviceNum,
+              tradeQty: item.tradeQty,
+              abnormalDeviceNum: item.abnormalDeviceNum,
+              showImag: item.showImage
+            }
             realArr.value.push(obj)
           })
         }
       })
-      setInterval(() => {
-        initMap()
-      }, 30000)
       dtLoading.value = false
     }
     const setNumberTransform = (num) => {

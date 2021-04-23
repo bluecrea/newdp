@@ -25,7 +25,7 @@
           </div>
           <ul class="box">
             <li v-for="(item, index) in marketArr" :key="index">
-              <router-link :to="{path: '/monitorDetail', query: {stallId: item.stallId}}">
+              <router-link :to="{path: '/monitorDetail', query: {stallId: item.stallId, marketId: marketId, name: marketObj.marketName}}">
                 <div class="stalls-no">
                   <span class="no">{{ item.stallCode }}</span>
                   <span class="st">
@@ -113,15 +113,15 @@
                 <div class="marquee-wrap">
                   <ul class="marquee-list" v-if="deviceArr.length > 0" :class="{ 'animate-up': animateUp }">
                     <li v-for="item in deviceArr" :key="item">
-                      <span>{{ item.orderTime.slice(5,11) }}</span>
+                      <span>{{ item.orderTime }}</span>
                       <span>{{ item.stallCode }}</span>
-                      <span>钓鱼岛</span>
+                      <span>{{ item.goodsName }}</span>
                       <span>{{ item.price }}</span>
                     </li>
                   </ul>
                   <ul class="marquee-list" v-else>
                     <li class="no-data">
-                      <Loading/>
+                      暂无数据
                     </li>
                   </ul>
                 </div>
@@ -146,7 +146,7 @@ export default {
     Loading
   },
   setup() {
-    const dtLoading = ref(false)
+    const dtLoading = ref(true)
     const marketObj = ref({})
     const marketArr = ref([])
     const tradeImageQty = ref([])

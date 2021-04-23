@@ -67,6 +67,7 @@ export default {
         name: '物价指数',
         type: 'line',
         smooth: true,
+        symbol: "none",
         lineStyle: {
           normal: {
             width: 1
@@ -113,8 +114,8 @@ export default {
               }
             },
             {
-              type: 'average',
-              name: '平均值',
+              name: '今天',
+              value: '今天',
               itemStyle: {
                 color: '#00b4ff'
               }
@@ -131,6 +132,8 @@ export default {
             options.xAxis[0].data.push(item.date.slice(5,10))
             options.series[0].data.push(item.index)
           })
+          options.series[0].markPoint.data[2].xAxis = res.data.length -1
+          options.series[0].markPoint.data[2].yAxis = res.data[res.data.length-1].index
           nextTick(() => {
             let chart = echarts.init(cpiLine.value)
             chart.setOption(options)

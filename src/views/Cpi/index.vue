@@ -23,7 +23,7 @@
             <ul class="status">
               <li>最高</li>
               <li>最低</li>
-              <li>平均</li>
+              <li>今天</li>
               <li>物价指数</li>
             </ul>
           </div>
@@ -72,11 +72,13 @@ export default {
     const increaseOps = {
       goodsName: [],
       goodsValue: [],
+      goodsPrice: [],
       goodsMax: []
     }
     const declineOps = {
       goodsName: [],
       goodsValue: [],
+      goodsPrice: [],
       goodsMax: []
     }
     const goodsIndexArr = ref([])
@@ -97,11 +99,13 @@ export default {
           }))
           res.data.items.forEach(item => {
             increaseOps.goodsName.push(item.goodsName)
+            increaseOps.goodsPrice.push(item.price)
             increaseOps.goodsValue.push(item.dailyFluctuation)
             increaseOps.goodsMax.push(maxNum)
           })
           res.data.newItems.forEach(item => {
             declineOps.goodsName.push(item.goodsName)
+            declineOps.goodsPrice.push(item.price)
             declineOps.goodsValue.push(item.dailyFluctuation)
             declineOps.goodsMax.push(maxNum)
           })

@@ -21,38 +21,42 @@ export const detailOption = {
   },
   visualMap: {
     type: 'piecewise',
-    pieces: [
+    pieces: [{
+      max: 0,
+      min: 0,
+      label: '在线',
+      color: '#00ff33',
+      symbol: 'circle'
+    },
       {
-        min: 0,
-        max: 0,
-        label: '未接入',
-        symbol: 'circle',
-        color: '#9a9a9a'
-      },{
         min: 1,
         max: 1,
-        label: '不在线',
-        symbol: 'circle',
-        color: '#ffffff'
-      },{
-        max: 2,
-        min: 2,
-        label: '在线',
-        color: '#00ff33',
-        symbol: 'circle'
-      },{
-        min: 3,
-        max: 3,
         label: '预警',
         symbol: 'circle',
-        color: '#ffd600'
-      },{
-        min: 4,
-        max: 4,
+        color: '#f0953d'
+      },
+      {
+        min: 2,
+        max: 2,
         label: '报警',
         symbol: 'circle',
-        color: '#fc0000'
-      }],
+        color: '#ea3323'
+      },
+      {
+        min: 3,
+        max: 3,
+        label: '不在线',
+        symbol: 'circle',
+        color: '#fff'
+      },
+      {
+        min: 4,
+        max: 4,
+        label: '未接入',
+        symbol: 'circle',
+        color: '#8eced6'
+      }
+    ],
     color: '#fff',
     textStyle: {
       color: '#fff',
@@ -65,16 +69,6 @@ export const detailOption = {
     visibility: 'off'
   },
   series: [{
-    name: '未接入',
-    type: 'scatter',
-    coordinateSystem: 'geo',
-    data: []
-  }, {
-    name: '不在线',
-    type: 'scatter',
-    coordinateSystem: 'geo',
-    data: []
-  }, {
     name: '在线',
     type: 'effectScatter',
     coordinateSystem: 'geo',
@@ -96,26 +90,18 @@ export const detailOption = {
         lineHeight: 25,
         color: '#ffffff',
         formatter: function(params) {
-          return '{title|'+params.data.title +'}\n' +
-            '{key|档口数：}{value|'+params.data.stallNum +'}\n' +
+          return '{title|'+params.data.title +'}'
+            /*'{key|档口数：}{value|'+params.data.stallNum +'}\n' +
             '{key|交易数：}{value|'+params.data.tradeQty +'}\n' +
             '{key|交易额：}{value|'+params.data.turnover+'}\n' +
-            '{key|器具总数：}{value|'+params.data.deviceNum+'}'
+            '{key|器具总数：}{value|'+params.data.deviceNum+'}'*/
         },
         rich: {
           title: {
             padding: [0, 0, 5, 0],
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: 'bold',
             color: '#ffffff'
-          },
-          key: {
-            color: '#ffffff',
-            fontSize: 14,
-          },
-          value: {
-            color: '#ffc740',
-            fontSize: 14,
           }
         }
       }
@@ -128,6 +114,16 @@ export const detailOption = {
     data: []
   },{
     name: '报警',
+    type: 'scatter',
+    coordinateSystem: 'geo',
+    data: []
+  },{
+    name: '不在线',
+    type: 'scatter',
+    coordinateSystem: 'geo',
+    data: []
+  },{
+    name: '未接入',
     type: 'scatter',
     coordinateSystem: 'geo',
     data: []

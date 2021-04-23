@@ -8,9 +8,9 @@
           <h4>涨跌幅排行榜</h4>
         </div>
         <div class="box-cen">
-          <h5>涨幅——深圳市</h5>
+          <h5>涨幅——{{ mapName }}</h5>
           <jump-sink-bar :options="increaseOps" v-if="increaseOps.goodsName.length > 0" types="increase"/>
-          <h5>跌幅——深圳市</h5>
+          <h5>跌幅——{{ mapName }}</h5>
           <down-sink-bar :options="declineOps" v-if="declineOps.goodsName.length > 0" types="decline"/>
         </div>
         <div class="box-bottom"/>
@@ -71,9 +71,10 @@ export default {
     const dtLoading = ref(true)
     const router = useRouter()
     const route = useRoute()
+    const mapName = route.query.name
     const countyCode = ref('')
     cityMap.forEach(item => {
-      if (route.query.name === item.area) {
+      if (mapName === item.area) {
         if (route.query.name.indexOf('大鹏') !== -1) {
           countyCode.value =  '440311'
         } else if (route.query.name.indexOf('光明') !== -1) {
@@ -104,9 +105,9 @@ export default {
           })
         }
       })
-      getIndexUp({}).then(res => {
+      getIndexUp({countyCode: countyCode.value }).then(res => {
         if (res.result.success) {
-          const maxNum = Math.max.apply(Math, res.data.items.mapOps.map(item => {
+          const maxNum = Math.max.apply(Math, res.data.items.map(item => {
             return item.dailyFluctuation
           }))
           res.data.items.forEach(item => {
@@ -121,7 +122,7 @@ export default {
           })
         }
       })
-      getGoodsIndex({}).then(res => {
+      getGoodsIndex({countyCode: countyCode.value }).then(res => {
         if (res.result.success) {
           goodsIndexArr.value = res.data.items
         }
@@ -136,7 +137,7 @@ export default {
     nextTick(() => {
       dtLoading.value = false
     })
-    return { dtLoading, increaseOps, mapOptions, goBack, goodsIndexArr, declineOps,countyCode }
+    return { dtLoading, increaseOps, mapOptions, goBack, goodsIndexArr, declineOps,countyCode,mapName }
   }
 }
 </script>
