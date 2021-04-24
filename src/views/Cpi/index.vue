@@ -55,7 +55,7 @@ import CpiMap from './components/CpiMap'
 import MetaVegetables from './components/MetaVegetables'
 import { nextTick, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {getAreaIndexStatistics,getIndexUp, getGoodsIndex} from '@/utils/api'
+import {getAreaIndexStatistics, getIndexUp, getGoodsIndex, getIndexDown} from '@/utils/api'
 
 export default {
   name: 'cpi',
@@ -99,15 +99,20 @@ export default {
           }))
           res.data.items.forEach(item => {
             increaseOps.goodsName.push(item.goodsName)
-            increaseOps.goodsPrice.push(item.price)
             increaseOps.goodsValue.push(item.dailyFluctuation)
-            increaseOps.goodsMax.push(maxNum)
+            increaseOps.goodsMax.push({value: maxNum*1.4, price: item.price})
           })
-          res.data.newItems.forEach(item => {
+        }
+      })
+      getIndexDown({}).then(res => {
+        const maxNum = Math.max.apply(Math, res.data.items.map(item => {
+          return item.dailyFluctuation
+        }))
+        if (res.result.success) {
+          res.data.items.map(item => {
             declineOps.goodsName.push(item.goodsName)
-            declineOps.goodsPrice.push(item.price)
             declineOps.goodsValue.push(item.dailyFluctuation)
-            declineOps.goodsMax.push(maxNum)
+            declineOps.goodsMax.push({value: maxNum, price: item.price})
           })
         }
       })

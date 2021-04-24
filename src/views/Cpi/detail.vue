@@ -54,7 +54,7 @@ import DownSinkBar from './components/DownSinkBar'
 import MetaVegetables from './components/MetaVegetables'
 import { nextTick, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import {getAreaIndexStatistics,getIndexUp, getGoodsIndex} from '@/utils/api'
+import {getAreaIndexStatistics, getIndexUp, getGoodsIndex, getIndexDown} from '@/utils/api'
 import { cityMap } from '@/views/Measure/components/InitMap'
 import DetailMap from '@/views/Cpi/components/DetailMap'
 
@@ -113,12 +113,19 @@ export default {
           res.data.items.forEach(item => {
             increaseOps.goodsName.push(item.goodsName)
             increaseOps.goodsValue.push(item.dailyFluctuation)
-            increaseOps.goodsMax.push(maxNum)
+            increaseOps.goodsMax.push({value: maxNum*1.4, price: item.price})
           })
-          res.data.newItems.forEach(item => {
+        }
+      })
+      getIndexDown({}).then(res => {
+        const maxNum = Math.max.apply(Math, res.data.items.map(item => {
+          return item.dailyFluctuation
+        }))
+        if (res.result.success) {
+          res.data.items.map(item => {
             declineOps.goodsName.push(item.goodsName)
             declineOps.goodsValue.push(item.dailyFluctuation)
-            declineOps.goodsMax.push(maxNum)
+            declineOps.goodsMax.push({value: maxNum, price: item.price})
           })
         }
       })

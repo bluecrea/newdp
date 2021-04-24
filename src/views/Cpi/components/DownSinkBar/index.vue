@@ -47,7 +47,7 @@ export default {
         axisLine: {
           show: false
         },
-        data: props.options.goodsName.slice(0,10)
+        data: props.options.goodsName
       },{
         type: 'category',
         inverse: true,
@@ -60,7 +60,14 @@ export default {
             fontSize: '12'
           },
         },
-        data: props.options.goodsPrice.slice(0,10)
+        //data: props.options.goodsPrice
+      }],
+      dataZoom: [{
+        yAxisIndex: 0,
+        show: false,
+        type: 'slider',
+        startValue: 0,
+        endValue: 9
       }],
       series: [{
         name: '值',
@@ -71,18 +78,25 @@ export default {
             barBorderRadius: 30,
           },
         },
-        barWidth: 20,
+        barWidth: 16,
         data: props.options.goodsValue
       },{
         name: '背景',
         type: 'bar',
-        barWidth: 20,
+        barWidth: 16,
         barGap: '-100%',
-        data: props.options.goodsMax.slice(0,10),
+        data: props.options.goodsMax,
         itemStyle: {
           normal: {
             barBorderRadius: 30,
           }
+        },
+        label:{
+          show: true,
+          position: 'insideRight',
+          formatter: val => {
+            return val.data.price
+          },
         },
       }]
     }
@@ -99,6 +113,20 @@ export default {
     }
     nextTick(() => {
       let chart = echarts.init(increase.value)
+      if (props.options.goodsName.length > 10) {
+        setInterval(() => {
+          if (options.dataZoom[0].endValue === props.options.goodsPrice.length) {
+            options.dataZoom[0].endValue = 9
+            options.dataZoom[0].startValue = 0
+          } else {
+            options.dataZoom[0].endValue = options.dataZoom[0].endValue+ 1
+            options.dataZoom[0].startValue = options.dataZoom[0].startValue + 1
+          }
+          chart.setOption(options)
+        }, 2500)
+      } else {
+        chart.setOption(options)
+      }
       chart.setOption(options)
       window.addEventListener('resize', () => {
         chart.resize();
