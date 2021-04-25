@@ -104,21 +104,56 @@ export default {
               name: '最大值',
               itemStyle: {
                 color: '#ff0000'
-              }
+              },
+              label: {
+                show: true,
+                position: "bottom",
+                lineHeight: 20,
+                backgroundColor: 'rgba(0,216,255,.2)',
+                borderRadius: 2,
+                borderColor: '#00c6ff',
+                borderWidth: '1',
+                padding: [5, 15, 4],
+                fontSize: 14,
+                fontWeight: 'normal',
+              },
             },
             {
               type : 'min',
               name: '最小值',
               itemStyle: {
                 color: '#00ff66'
-              }
+              },
+              label: {
+                show: true,
+                position: "bottom",
+                lineHeight: 20,
+                backgroundColor: 'rgba(0,216,255,.2)',
+                borderRadius: 2,
+                borderColor: '#00c6ff',
+                borderWidth: '1',
+                padding: [5, 15, 4],
+                fontSize: 14,
+                fontWeight: 'normal',
+              },
             },
             {
               name: '今天',
-              value: '今天',
               itemStyle: {
                 color: '#00b4ff'
-              }
+              },
+              label: {
+                show: true,
+                position: "bottom",
+                lineHeight: 20,
+                backgroundColor: 'rgba(0,216,255,.2)',
+                borderRadius: 2,
+                borderColor: '#00c6ff',
+                borderWidth: '1',
+                padding: [5, 15, 4],
+                fontSize: 14,
+                fontWeight: 'normal',
+              },
             }
           ]
         },
@@ -134,6 +169,7 @@ export default {
           })
           options.series[0].markPoint.data[2].xAxis = res.data.length -1
           options.series[0].markPoint.data[2].yAxis = res.data[res.data.length-1].index
+          options.series[0].markPoint.data[2].value = res.data[res.data.length-1].index
           nextTick(() => {
             let chart = echarts.init(cpiLine.value)
             chart.setOption(options)

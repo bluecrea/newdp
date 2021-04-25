@@ -2,7 +2,7 @@
   <div class="swiper-container swiper">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(item, index) in imgLength" :key="index">
-        <img :src="`http://${item.showImag}`" alt="">
+        <img :src="item.showImag" alt="">
       </div>
     </div>
   </div>
