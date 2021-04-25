@@ -9,10 +9,9 @@ const getters = {
 const mutations = {
   SET_USERINFO(state, userInfo) {
     state.userInfo = userInfo
+    sessionStorage.setItem('userInfo', JSON.stringify(state.userInfo))
     if (state.userInfo.rememberMe) {
-      sessionStorage.setItem('userInfo', JSON.stringify(state.userInfo))
-    } else {
-      sessionStorage.removeItem('userInfo')
+      localStorage.setItem('userInfo',JSON.stringify(state.userInfo))
     }
   },
 

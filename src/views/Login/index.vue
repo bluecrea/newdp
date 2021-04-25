@@ -6,8 +6,8 @@
         <input type="text" placeholder="请输入登录ID" v-model="userName">
         <input type="password" placeholder="请输入密码" v-model="password">
         <label>
-          <input type="text" placeholder="请输入验证码">
-          <em/>
+          <input type="text" placeholder="请输入验证码" v-model="verifyCode">
+          <img :src="imgSrc" alt="">
         </label>
         <div class="remember-me">
           <input type="checkbox" v-model="rememberMe">
@@ -24,6 +24,7 @@ import { ref } from 'vue'
 import toast from '@/components/Toast'
 import { mapGetters, useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { getVerifyCode, login } from '@/utils/api'
 
 export default {
   name: 'login',
@@ -33,11 +34,13 @@ export default {
   setup() {
     const userName = ref('')
     const password = ref('')
+    const verifyCode = ref('')
     const rememberMe = ref(false)
     const errMsg = ref('')
     const showToast = ref(false)
     const store = useStore()
     const router = useRouter()
+    const imgSrc = ref(null)
     const submitLogin = () => {
       if (userName.value === '') {
         errMsg.value = '请输入用户ID！'
@@ -55,23 +58,40 @@ export default {
         }, 3000)
         return false
       }
-      const userInfo = {
-        userName: userName.value,
-        password: password.value,
-        rememberMe: rememberMe.value
+      if (verifyCode.value === '') {
+        errMsg.value = '请输入验证码！'
+        showToast.value = true
+        setTimeout(() => {
+          showToast.value = false
+        }, 3000)
+        return false
       }
-      store.dispatch('userInfo/setUserInfo', userInfo)
-      router.push('/')
-    }
+      const userInfo = {
+        userCode: userName.value,
+        userPwd: password.value,
+        verifyCode: verifyCode.value
+      }
+      login(userInfo).then(res => {
+        if (res.result.success) {
+          let userInfo = res.data.user
+          userInfo.rememberMe = rememberMe.value
+          userInfo.token = res.data.token
+          store.dispatch('userInfo/setUserInfo', userInfo)
+          router.push('/')
+        } else {
+          errMsg.value = res.result.message
+          showToast.value = true
+          setTimeout(() => {
+            showToast.value = false
+          }, 3000)
+        }
+      })
 
-    return {
-      userName,
-      password,
-      rememberMe,
-      errMsg,
-      showToast,
-      submitLogin
     }
+    getVerifyCode({}).then(res => {
+      imgSrc.value = URL.createObjectURL(new Blob([res.data],{ type: 'application/zip' }))
+    })
+    return { userName, password, rememberMe, errMsg, showToast, submitLogin, imgSrc, verifyCode }
   },
   computed: {
     ...mapGetters({
