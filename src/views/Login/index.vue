@@ -16,21 +16,18 @@
         <button type="submit" @click="submitLogin">登录</button>
       </div>
     </div>
-    <toast toast-mode="error" :toast-msg="errMsg" :show-toast="showToast"/>
   </div>
 </template>
 <script>
-import { ref } from 'vue'
-import toast from '@/components/Toast'
+import { ref,defineComponent } from 'vue'
 import { mapGetters, useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { getVerifyCode, login } from '@/utils/api'
+import message from 'ant-design-vue/lib/message'
+import 'ant-design-vue/lib/message/style/css'
 
-export default {
+export default defineComponent({
   name: 'login',
-  components: {
-    toast
-  },
   setup() {
     const userName = ref('')
     const password = ref('')
@@ -43,27 +40,15 @@ export default {
     const imgSrc = ref(null)
     const submitLogin = () => {
       if (userName.value === '') {
-        errMsg.value = '请输入用户ID！'
-        showToast.value = true
-        setTimeout(() => {
-          showToast.value = false
-        }, 3000)
+        message.error('请输入用户ID！')
         return false
       }
       if (password.value === '') {
-        errMsg.value = '请输入密码！'
-        showToast.value = true
-        setTimeout(() => {
-          showToast.value = false
-        }, 3000)
+        message.error('请输入密码！')
         return false
       }
       if (verifyCode.value === '') {
-        errMsg.value = '请输入验证码！'
-        showToast.value = true
-        setTimeout(() => {
-          showToast.value = false
-        }, 3000)
+        message.error('请输入验证码！')
         return false
       }
       const userInfo = {
@@ -79,11 +64,7 @@ export default {
           store.dispatch('userInfo/setUserInfo', userInfo)
           router.push('/')
         } else {
-          errMsg.value = res.result.message
-          showToast.value = true
-          setTimeout(() => {
-            showToast.value = false
-          }, 3000)
+          message.error(res.result.message)
         }
       })
 
@@ -98,5 +79,5 @@ export default {
       userInfo: 'userInfo/userInfo'
     })
   }
-}
+})
 </script>

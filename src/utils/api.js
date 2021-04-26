@@ -1,4 +1,4 @@
-import { getMap, request } from './request'
+import { mapURL, getMap, request } from './request'
 import axios from 'axios'
 
 export const getOnMap = (data) => getMap({url: `${data}.json`})
@@ -11,7 +11,7 @@ export const getPriceTrendData = (data) => request({url: 'getPriceTrendData', da
 export const getStallStatisticsInfo = (data) => request({url:'getStallStatisticsInfo', data: data})
 export const getDeviceStatistics = (data) => request({url: 'getDeviceStatistics', data: data})
 export const getComplaintList = (data) => request({url: 'getComplaintList', data: data})
-export const getVerifyCode = (data) => axios.post('http://192.168.1.60:8080/dcApi/getVerifyCode',data,{responseType: 'blob'})
+export const getVerifyCode = (data) => axios.post(`${mapURL}/dcApi/getVerifyCode`,data,{responseType: 'blob'})
 export const getAreaIndexStatistics = (data) => request({url:'getAreaIndexStatistics', data: data})
 export const getIndexUp = (data) => request({url: 'getIndexUp', data: data})
 export const getIndexDown = (data) => request({url: 'getIndexDown', data: data})

@@ -1,18 +1,19 @@
 import axios from 'axios'
 
 const userInfo = sessionStorage.getItem('userInfo') || null
+export const mapURL = process.env.VUE_APP_MAP
+export const basicUrl = process.env.VUE_APP_API
 
+console.log(mapURL)
 export const request = axios.create({
-  //baseURL: 'http://192.168.1.60:8080/dcApi/',
-  baseURL: 'https://www.cnnmcloud.com/apis/dcApi/',
+  baseURL: mapURL,
   headers: {'Content-Type': 'application/json'},
   timeout: 6000,
   method: 'POST',
-
 })
 
 export const getMap = axios.create({
-  baseURL: 'https://map.xiachuyi.com/map/',
+  baseURL: basicUrl,
   timeout: 6000,
   method: 'GET'
 })
