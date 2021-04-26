@@ -1,10 +1,8 @@
 import axios from 'axios'
+import { mapURL, basicUrl } from '@/utils/config'
 
-const userInfo = sessionStorage.getItem('userInfo') || null
-export const mapURL = process.env.VUE_APP_MAP
-export const basicUrl = process.env.VUE_APP_API
+const userInfo = sessionStorage.getItem('userInfo')
 
-console.log(mapURL)
 export const request = axios.create({
   baseURL: mapURL,
   headers: {'Content-Type': 'application/json'},
